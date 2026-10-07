@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0e1220">
-<meta name="description" content="28개의 질문으로 살펴보는 나의 애착유형. 불안과 거리두기 두 축을 통해 관계 속 나의 패턴을 알아보세요.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BOND 28 — 애착유형 검사">
-<meta property="og:description" content="나는 관계에서 어떻게 마음을 놓는가? 28개의 질문으로 나의 애착유형을 살펴보세요.">
-<meta name="twitter:card" content="summary">
 <title>BOND 28 — 애착유형 검사</title>
+<meta name="description" content="28개의 질문으로 알아보는 BOND 28 애착유형 검사. 불안과 거리두기 두 축으로 나의 관계 패턴을 살펴보세요.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BOND 28 — 나는 관계에서 어떻게 마음을 놓는가">
+<meta property="og:description" content="28개의 질문으로 알아보는 나의 애착유형. 불안과 거리두기 두 축으로 관계 패턴을 살펴보세요.">
+<meta property="og:url" content="https://qlddka2.github.io/Bond28/">
+<meta name="twitter:card" content="summary">
 <style>
 :root{--line:#2a3150;--text:#f2efe9;--muted:#98a0b8;--amber:#f0b46c;--teal:#52c7b0}
 *{box-sizing:border-box}html,body{margin:0;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;background:radial-gradient(circle at 15% -8%,#2b2545 0,transparent 48%),radial-gradient(circle at 95% 8%,#143238 0,transparent 42%),#0e1220}
@@ -23,7 +23,7 @@ select{background:#171c30;color:#dfe4eb;border:1px solid var(--line);border-radi
 .btn{border:0;border-radius:14px;padding:14px 18px;background:var(--text);color:#0e1220;font-weight:800;font-size:15px;cursor:pointer}.btn.primary{background:linear-gradient(90deg,#e9a85a,#4fbfa8);color:#0e1220}.btn.ghost{background:#1a2036;color:#dfe4eb;border:1px solid var(--line)}.btn:disabled{opacity:.4}
 .actions{display:flex;gap:10px;margin-top:20px}.actions .btn{flex:1}.pg{height:5px;background:#202640;border-radius:99px;overflow:hidden;margin:8px 0 20px}.pg i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--teal));width:0}
 .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.qnum{color:var(--teal);font-size:12px;font-weight:800;letter-spacing:.12em}
-.question{font-size:clamp(21px,5.8vw,29px);line-height:1.4;letter-spacing:-.02em;margin:16px 0 24px;min-height:84px}.choices{display:grid;gap:9px}.choice{position:relative}.choice input{position:absolute;opacity:0;width:1px;height:1px}.choice input:focus-visible+label{outline:3px solid var(--teal);outline-offset:3px}
+.question{font-size:clamp(21px,5.8vw,29px);line-height:1.4;letter-spacing:-.02em;margin:16px 0 24px;min-height:84px}.choices{display:grid;gap:9px}.choice{position:relative}.choice input{position:absolute;opacity:0}
 .choice label{-webkit-tap-highlight-color:transparent;min-height:46px;display:flex;align-items:center;border:1px solid #2b3352;background:#171c30;border-radius:15px;padding:11px 16px;cursor:pointer}.choice input:checked+label{border-color:var(--amber);background:#2a2430;box-shadow:0 0 0 1px var(--amber) inset}
 .rh{padding:28px 6px 10px;text-align:center}.kick{font-size:11px;letter-spacing:.22em;color:#8f9ab0;font-weight:800}.tn{font-size:clamp(34px,10vw,56px);font-weight:800;margin:12px 0 4px;letter-spacing:-.03em}
 .nick{font-size:17px;font-weight:700;color:#c9cfdd}.tl{max-width:560px;margin:12px auto 0;color:#b4bccb;line-height:1.7;font-size:14px}
@@ -34,7 +34,7 @@ select{background:#171c30;color:#dfe4eb;border:1px solid var(--line);border-radi
 .mid{position:absolute;left:50%;top:0;bottom:0;width:3px;background:#fffa;z-index:2}.sv{display:flex;justify-content:center;margin-top:7px}
 .rd{border-left:3px solid;padding-left:12px;margin-top:18px}.rd:first-child{margin-top:0}.rd h3{font-size:17px;font-weight:900;margin:0 0 8px}.rd p{font-size:13.5px;line-height:1.75;color:#b9c0cf;margin:0 0 6px}
 .mini{font-size:12px;line-height:1.7;color:#8e99b0;margin:0}.sh{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.sh .btn{color:#fff;font-size:13px;padding:12px}
-.footer{text-align:center;color:#6f7a93;font-size:11px;margin-top:22px}
+.footer{text-align:center;color:#6f7a93;font-size:11px;margin-top:22px}.shared{display:none;background:linear-gradient(135deg,rgba(240,180,108,.12),rgba(82,199,176,.12));border:1px solid #39415f;border-radius:18px;padding:16px 18px;margin:0 0 16px;text-align:center}.shared.show{display:block}.shared b{display:block;font-size:14px;margin-bottom:6px}.shared span{display:block;color:#9fa8bb;font-size:12px;line-height:1.6}
 @media(max-width:520px){.axis-grid{grid-template-columns:1fr}.actions{position:sticky;bottom:8px;background:linear-gradient(transparent,#0e1220 25%);padding-top:14px}}
 </style></head><body><div class="wrap">
 <div class="top"><div class="logo"><svg width="28" height="18" viewBox="0 0 28 18"><circle cx="9" cy="9" r="7" fill="none" stroke="#f0b46c" stroke-width="2"/><circle cx="19" cy="9" r="7" fill="none" stroke="#52c7b0" stroke-width="2"/></svg>BOND 28</div>
@@ -48,7 +48,7 @@ select{background:#171c30;color:#dfe4eb;border:1px solid var(--line);border-radi
 <div class="card"><div class="qnum" id="qnum"></div><div class="question serif" id="question"></div><div class="choices" id="choices"></div></div>
 <div class="actions"><button class="btn ghost" id="prev" onclick="prevQ()" data-k="prev"></button><button class="btn primary" id="next" onclick="nextQ()"></button></div></section>
 
-<section id="result" class="screen"><div class="rh"><div class="kick">YOUR ATTACHMENT STYLE</div><div class="tn serif" id="typeName"></div><div class="nick" id="nick"></div><p class="tl" id="summary"></p></div>
+<section id="result" class="screen"><div id="sharedBanner" class="shared"><b id="sharedTitle"></b><span id="sharedDesc"></span><button class="btn primary" style="margin-top:12px" onclick="restart()" id="sharedStart"></button></div><div class="rh"><div class="kick">YOUR ATTACHMENT STYLE</div><div class="tn serif" id="typeName"></div><div class="nick" id="nick"></div><p class="tl" id="summary"></p></div>
 <div class="art" id="art1"></div><div class="art" id="art2"></div><div class="chips" id="chips"></div>
 <div class="pc"><div class="ct"><span data-k="vm"></span><small data-k="vmS"></small></div><div id="bars"></div></div>
 <div class="pc"><div class="ct"><span data-k="yr"></span><small data-k="yrS"></small></div><div id="insights"></div></div>
@@ -63,10 +63,10 @@ select{background:#171c30;color:#dfe4eb;border:1px solid var(--line);border-radi
 let lang="ko",qs=[],ans=[],idx=0,startAt=0,ti=null,last=null;
 const $=id=>document.getElementById(id);
 const UI={
-ko:{h1:"나는 관계에서<br><em>어떻게 마음을 놓는가</em>",hero:"28개의 질문으로 연애와 가까운 관계 속 나의 패턴을 ‘불안’과 ‘거리두기’ 두 축으로 살펴보고, 네 가지 애착유형 중 어디에 가까운지 보여줍니다.",start:"검사 시작",how:"검사 방식",guide:"가장 최근의 연애나 가까운 관계를 떠올리며, 옳은 답이 아니라 평소의 반응에 가깝게 · 약 8~10분 · 문항은 무작위로 섞입니다",ten:"약 10분",prev:"이전",next:"다음",fin:"결과 보기",vm:"ATTACHMENT MAP",vmS:"가운데에서 내 쪽으로 채워진 정도 = 강도 (한쪽 최대 3단계)",yr:"YOUR READ",yrS:"두 축 풀이",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"이 검사는 임상 진단이 아닌 자기이해용 도구입니다. 애착유형은 고정된 라벨이 아니라 상대·상황·경험에 따라 달라지는 연속선입니다. 점수는 척도의 중간값(4점)을 기준으로 한 상대 위치이며, 심리적 어려움이 크다면 전문가와 상담해 보세요.",again:"다시 검사",copy:"결과 복사",card:"결과 카드",foot:"BOND 28 · 결과는 서버로 전송하거나 저장하지 않습니다.",save:"이미지를 길게 눌러 저장하세요",shr:"공유",resume:"이전에 진행하던 검사가 있습니다. 이어서 진행할까요?",bord:"두 축 모두 중심 가까이에 있어 유형 경계에 가깝습니다. 상황에 따라 다른 유형처럼 보일 수 있어요."},
-en:{h1:"How do you<br><em>let your guard down</em><br>in relationships?",hero:"28 questions map your pattern in close relationships on two axes, anxiety and distance, and show which of the four attachment styles you lean toward.",start:"Start",how:"How it works",guide:"Think of your most recent romantic or close relationship; answer with your usual reaction, not the right answer · about 8–10 min · questions are shuffled",ten:"~10 min",prev:"Back",next:"Next",fin:"See result",vm:"ATTACHMENT MAP",vmS:"Fill grows from the center toward your side (up to 3 levels per side)",yr:"YOUR READ",yrS:"Two axes",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"This is a self-understanding tool, not a clinical diagnosis. Attachment style is a continuum that shifts with partner, situation and experience, not a fixed label. Scores are relative to the scale midpoint (4); if you're struggling, consider talking to a professional.",again:"Retake",copy:"Copy result",card:"Result card",foot:"BOND 28 · Results are never sent or stored on a server.",save:"Press and hold the image to save",shr:"Share",resume:"You have an unfinished test. Continue?",bord:"Both axes are near the center, so you're close to a boundary between types and may look like a different type depending on the situation."},
-zh:{h1:"你在亲密关系中<br><em>如何放下戒备</em>?",hero:"用28道题，从“焦虑”与“保持距离”两条轴观察你在亲密关系中的模式，并告诉你更接近四种依恋类型中的哪一种。",start:"开始测试",how:"测试方式",guide:"请回想最近一段恋爱或亲近的关系，按平时的真实反应作答，而非“正确答案” · 约8~10分钟 · 题目随机排序",ten:"约10分钟",prev:"上一题",next:"下一题",fin:"查看结果",vm:"ATTACHMENT MAP",vmS:"从中线向你偏向的一侧填充（每侧最多3级）",yr:"YOUR READ",yrS:"两条轴解读",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"本测试是用于自我了解的工具，不是临床诊断。依恋类型不是固定标签，而是会随对象、情境和经历变化的连续谱。分数以量表中点（4分）为基准的相对位置；如感到困扰，建议咨询专业人士。",again:"重新测试",copy:"复制结果",card:"结果卡片",foot:"BOND 28 · 结果不会上传或保存到服务器。",save:"长按图片保存",shr:"分享",resume:"有未完成的测试，要继续吗？",bord:"两条轴都靠近中心，接近类型边界，视情境可能表现得像其他类型。"},
-ja:{h1:"あなたは関係の中で<br><em>どう心を預ける</em>のか?",hero:"28の質問で、親密な関係での傾向を「不安」と「距離」の2軸で見て、4つの愛着タイプのどれに近いかを示します。",start:"診断開始",how:"診断の流れ",guide:"最近の恋愛や親しい関係を思い浮かべ、正解ではなくふだんの反応に近く · 約8〜10分 · 質問はランダム順です",ten:"約10分",prev:"戻る",next:"次へ",fin:"結果を見る",vm:"ATTACHMENT MAP",vmS:"中央から傾いた側へ色が伸びます（片側最大3段階）",yr:"YOUR READ",yrS:"2軸の読み解き",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"この診断は自己理解のためのもので、臨床診断ではありません。愛着タイプは固定のラベルではなく、相手・状況・経験で変わる連続体です。点数は尺度の中間値（4点）を基準にした相対位置です。つらさが大きい場合は専門家への相談をご検討ください。",again:"もう一度",copy:"結果をコピー",card:"結果カード",foot:"BOND 28 · 結果はサーバーに送信・保存されません。",save:"画像を長押しして保存",shr:"共有",resume:"途中の診断があります。続けますか？",bord:"両軸とも中心に近く、タイプの境界に近い状態です。状況によって別のタイプに見えることもあります。"}};
+ko:{h1:"나는 관계에서<br><em>어떻게 마음을 놓는가</em>",hero:"28개의 질문으로 연애와 가까운 관계 속 나의 패턴을 ‘불안’과 ‘거리두기’ 두 축으로 살펴보고, 네 가지 애착유형 중 어디에 가까운지 보여줍니다.",start:"검사 시작",how:"검사 방식",guide:"가장 최근의 연애나 가까운 관계를 떠올리며, 옳은 답이 아니라 평소의 반응에 가깝게 · 약 8~10분 · 문항은 무작위로 섞입니다",ten:"약 10분",prev:"이전",next:"다음",fin:"결과 보기",vm:"ATTACHMENT MAP",vmS:"가운데에서 내 쪽으로 채워진 정도 = 강도 (한쪽 최대 3단계)",yr:"YOUR READ",yrS:"두 축 풀이",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"이 검사는 임상 진단이 아닌 자기이해용 도구입니다. 애착유형은 고정된 라벨이 아니라 상대·상황·경험에 따라 달라지는 연속선입니다. 점수는 척도의 중간값(4점)을 기준으로 한 상대 위치이며, 심리적 어려움이 크다면 전문가와 상담해 보세요.",again:"다시 검사",copy:"결과 복사",card:"결과 카드",foot:"BOND 28 · 결과는 서버로 전송하거나 저장하지 않습니다.",sharedTitle:"친구가 BOND 28에서 이 결과를 받았어요",sharedDesc:"나도 같은 검사를 해보고 내 애착유형을 확인해 보세요.",sharedStart:"나도 검사하기",save:"이미지를 길게 눌러 저장하세요",shr:"공유",resume:"이전에 진행하던 검사가 있습니다. 이어서 진행할까요?",bord:"두 축 모두 중심 가까이에 있어 유형 경계에 가깝습니다. 상황에 따라 다른 유형처럼 보일 수 있어요."},
+en:{h1:"How do you<br><em>let your guard down</em><br>in relationships?",hero:"28 questions map your pattern in close relationships on two axes, anxiety and distance, and show which of the four attachment styles you lean toward.",start:"Start",how:"How it works",guide:"Think of your most recent romantic or close relationship; answer with your usual reaction, not the right answer · about 8–10 min · questions are shuffled",ten:"~10 min",prev:"Back",next:"Next",fin:"See result",vm:"ATTACHMENT MAP",vmS:"Fill grows from the center toward your side (up to 3 levels per side)",yr:"YOUR READ",yrS:"Two axes",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"This is a self-understanding tool, not a clinical diagnosis. Attachment style is a continuum that shifts with partner, situation and experience, not a fixed label. Scores are relative to the scale midpoint (4); if you're struggling, consider talking to a professional.",again:"Retake",copy:"Copy result",card:"Result card",foot:"BOND 28 · Results are never sent or stored on a server.",sharedTitle:"A friend shared their BOND 28 result with you",sharedDesc:"Take the same test and see which attachment style you lean toward.",sharedStart:"Take the test",save:"Press and hold the image to save",shr:"Share",resume:"You have an unfinished test. Continue?",bord:"Both axes are near the center, so you're close to a boundary between types and may look like a different type depending on the situation."},
+zh:{h1:"你在亲密关系中<br><em>如何放下戒备</em>?",hero:"用28道题，从“焦虑”与“保持距离”两条轴观察你在亲密关系中的模式，并告诉你更接近四种依恋类型中的哪一种。",start:"开始测试",how:"测试方式",guide:"请回想最近一段恋爱或亲近的关系，按平时的真实反应作答，而非“正确答案” · 约8~10分钟 · 题目随机排序",ten:"约10分钟",prev:"上一题",next:"下一题",fin:"查看结果",vm:"ATTACHMENT MAP",vmS:"从中线向你偏向的一侧填充（每侧最多3级）",yr:"YOUR READ",yrS:"两条轴解读",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"本测试是用于自我了解的工具，不是临床诊断。依恋类型不是固定标签，而是会随对象、情境和经历变化的连续谱。分数以量表中点（4分）为基准的相对位置；如感到困扰，建议咨询专业人士。",again:"重新测试",copy:"复制结果",card:"结果卡片",foot:"BOND 28 · 结果不会上传或保存到服务器。",sharedTitle:"朋友分享了他的 BOND 28 结果",sharedDesc:"也来完成同一套测试，看看你更接近哪种依恋类型。",sharedStart:"我也来测试",save:"长按图片保存",shr:"分享",resume:"有未完成的测试，要继续吗？",bord:"两条轴都靠近中心，接近类型边界，视情境可能表现得像其他类型。"},
+ja:{h1:"あなたは関係の中で<br><em>どう心を預ける</em>のか?",hero:"28の質問で、親密な関係での傾向を「不安」と「距離」の2軸で見て、4つの愛着タイプのどれに近いかを示します。",start:"診断開始",how:"診断の流れ",guide:"最近の恋愛や親しい関係を思い浮かべ、正解ではなくふだんの反応に近く · 約8〜10分 · 質問はランダム順です",ten:"約10分",prev:"戻る",next:"次へ",fin:"結果を見る",vm:"ATTACHMENT MAP",vmS:"中央から傾いた側へ色が伸びます（片側最大3段階）",yr:"YOUR READ",yrS:"2軸の読み解き",ty:"YOUR TYPE",ab:"ABOUT THIS RESULT",abT:"この診断は自己理解のためのもので、臨床診断ではありません。愛着タイプは固定のラベルではなく、相手・状況・経験で変わる連続体です。点数は尺度の中間値（4点）を基準にした相対位置です。つらさが大きい場合は専門家への相談をご検討ください。",again:"もう一度",copy:"結果をコピー",card:"結果カード",foot:"BOND 28 · 結果はサーバーに送信・保存されません。",sharedTitle:"友だちが BOND 28 の結果をシェアしました",sharedDesc:"同じ診断を受けて、自分の愛着タイプを見てみましょう。",sharedStart:"診断してみる",save:"画像を長押しして保存",shr:"共有",resume:"途中の診断があります。続けますか？",bord:"両軸とも中心に近く、タイプの境界に近い状態です。状況によって別のタイプに見えることもあります。"}};
 const SC={ko:["전혀 동의하지 않음","동의하지 않음","약간 동의하지 않음","보통","약간 동의함","동의함","매우 동의함"],en:["Strongly disagree","Disagree","Slightly disagree","Neutral","Slightly agree","Agree","Strongly agree"],zh:["完全不同意","不同意","有点不同意","一般","有点同意","同意","非常同意"],ja:["まったく同意しない","同意しない","やや同意しない","どちらでもない","やや同意する","同意する","とても同意する"]};
 const AXT={ko:[["안심 ↔ 불안","안심","불안","버림받음에 대한 걱정, 확인 욕구"],["친밀 ↔ 거리두기","친밀","거리두기","의존·속마음 표현에 대한 불편"]],
 en:[["Calm ↔ Anxiety","Calm","Anxious","fear of abandonment, need for reassurance"],["Closeness ↔ Distance","Close","Distant","comfort with reliance and opening up"]],
@@ -104,14 +104,14 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 function persist(){try{localStorage.setItem("bond_progress1",JSON.stringify({qs,ans,idx,startAt}))}catch(e){}}
 function tick(){clearInterval(ti);ti=setInterval(()=>{const s=Math.floor((Date.now()-startAt)/1000);$("timer").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},1000)}
 function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");window.scrollTo(0,0)}
-function start(){qs=shuffle(Array.from({length:28},(_,i)=>i)).map(i=>({i,ax:i<14?0:1,rev:i%14>=7}));ans=Array(28).fill(null);idx=0;startAt=Date.now();persist();show("test");renderQ();tick()}
+function start(){track("test_start");$("sharedBanner").classList.remove("show");qs=shuffle(Array.from({length:28},(_,i)=>i)).map(i=>({i,ax:i<14?0:1,rev:i%14>=7}));ans=Array(28).fill(null);idx=0;startAt=Date.now();persist();show("test");renderQ();tick()}
 function renderQ(){const q=qs[idx];$("count").textContent=`${idx+1} / 28`;$("qnum").textContent=`QUESTION ${String(idx+1).padStart(2,"0")}`;$("question").textContent=QT[lang][q.i];$("progress").style.width=((idx+1)/28*100)+"%";$("prev").disabled=idx===0;$("next").textContent=idx===27?UI[lang].fin:UI[lang].next;
 $("choices").innerHTML=SC[lang].map((t,i)=>`<div class="choice"><input ${ans[idx]===i+1?"checked":""} type="radio" name="a" id="c${i}" value="${i+1}"><label for="c${i}">${t}</label></div>`).join("")}
 $("choices").addEventListener("click",e=>{const lab=e.target.closest(".choice");if(!lab)return;e.preventDefault();const inp=lab.querySelector("input");ans[idx]=+inp.value;persist();document.querySelectorAll("#choices input").forEach(x=>x.checked=(x===inp));
 if(idx<27&&!window.advLock){window.advLock=true;setTimeout(()=>{window.advLock=false;if(idx<27){idx++;persist();renderQ()}},100)}});
 function nextQ(){if(ans[idx]==null)return;if(idx<27){idx++;persist();renderQ()}else finish()}
 function prevQ(){if(idx>0){idx--;renderQ()}}
-function finish(){clearInterval(ti);try{localStorage.removeItem("bond_progress1")}catch(e){}const sc=[0,0];qs.forEach((q,k)=>{let v=ans[k];if(q.rev)v=8-v;sc[q.ax]+=v});const result=sc.map(s=>Math.round((s-14)/84*100));renderResult(result);show("result");const u=new URL(location.href);u.searchParams.set("r",result.join("-"));history.replaceState({},"",u)}
+function finish(){track("test_complete");clearInterval(ti);try{localStorage.removeItem("bond_progress1")}catch(e){}const sc=[0,0];qs.forEach((q,k)=>{let v=ans[k];if(q.rev)v=8-v;sc[q.ax]+=v});renderResult(sc.map(s=>Math.round((s-14)/84*100)));show("result")}
 function quad(n){const t=n.map(v=>Math.max(2,Math.min(98,v))),x=t[0]*3,y=300-t[1]*3,nm=TY[lang].map(a=>a[0]),c=TC[tp(n)],q=(i,x0,y0)=>`<rect x="${x0}" y="${y0}" width="150" height="150" fill="${TC[i]}" fill-opacity=".16"/><text x="${x0+75}" y="${y0+80}" text-anchor="middle" font-size="13" font-weight="700" fill="${TC[i]}">${nm[i]}</text>`;
 return `<svg viewBox="-12 -6 324 332" style="width:min(88%,350px)">${q(2,0,0)}${q(3,150,0)}${q(0,0,150)}${q(1,150,150)}<rect width="300" height="300" fill="none" stroke="#2a3150"/><path d="M150 0V300M0 150H300" stroke="#ffffff33"/><circle cx="${x}" cy="${y}" r="17" fill="${c}" fill-opacity=".3"/><circle cx="${x}" cy="${y}" r="8" fill="#fff" stroke="${c}" stroke-width="3"/><text x="150" y="320" text-anchor="middle" font-size="11" fill="#98a0b8">${AXT[lang][0][2]} →</text><text x="-150" y="-2" transform="rotate(-90)" text-anchor="middle" font-size="11" fill="#98a0b8">${AXT[lang][1][2]} →</text></svg>`}
 function ties(n){const d=40+n[1]*1.7,x1=150-d/2,x2=150+d/2,amp=n[0]*0.22,c=TC[tp(n)];let p="";for(let s=0;s<=40;s++){const x=x1+(x2-x1)*s/40;p+=(s?"L":"M")+x.toFixed(1)+" "+(50+amp*Math.sin(s*.9)).toFixed(1)}
@@ -125,12 +125,18 @@ $("insights").innerHTML=[0,1].map(i=>{const a=AXT[lang][i],v=n[i],l=L5(v),k=l?tx
 $("typeDesc").innerHTML=`<div class="rd" style="border-color:${c}"><h3 style="color:${c}">${ty[0]} · ${ty[1]}</h3><p>${ty[3]}</p>${L5(n[0])+L5(n[1])<2&&Math.abs(n[0]-50)<8&&Math.abs(n[1]-50)<8?`<p style="color:#98a0b8">${UI[lang].bord}</p>`:""}</div>`}
 function setLang(l){lang=l;document.documentElement.lang=l;try{localStorage.setItem("bond_lang",l)}catch(e){}document.querySelectorAll("[data-k]").forEach(e=>e.innerHTML=UI[l][e.dataset.k]);
 $("axgrid").innerHTML=[0,1].map(i=>`<div class="axis" style="border-color:${i?"#6fa3ee":"#f0b46c"}"><b>${AXT[l][i][0]}</b><span>${AXT[l][i][3]}</span></div>`).join("");
-if($("test").classList.contains("active")&&qs.length)renderQ();if($("result").classList.contains("active")&&last)renderResult(last)}
-function shareText(){const ty=TY[lang][tp(last)];return `BOND 28\n${ty[0]} · ${ty[1]}\n${ty[2]}`}
-function copyResult(){navigator.clipboard?.writeText(shareText()).catch(()=>{})}
-function share(p){const url=location.href,txt=shareText(),e=encodeURIComponent;if(p==="line")return window.open(`https://social-plugins.line.me/lineit/share?url=${e(url)}&text=${e(txt)}`,"_blank");if(p==="wa")return window.open(`https://wa.me/?text=${e(txt+"\n"+url)}`,"_blank");
-if(navigator.share)navigator.share({title:"BOND 28",text:txt,url}).catch(()=>{});else navigator.clipboard?.writeText(txt+"\n"+url).catch(()=>{})}
-function restart(){try{localStorage.removeItem("bond_progress1")}catch(e){}last=null;const u=new URL(location.href);u.searchParams.delete("r");history.replaceState({},"",u);show("intro");$("timer").textContent="00:00"}
+if($("test").classList.contains("active")&&qs.length)renderQ();if($("result").classList.contains("active")&&last){renderResult(last);if(SHARED_MODE.active){$("sharedBanner").classList.add("show");$("sharedTitle").textContent=UI[l].sharedTitle;$("sharedDesc").textContent=UI[l].sharedDesc;$("sharedStart").textContent=UI[l].sharedStart}}}
+const SHARED_MODE={active:false};
+const GA_ID=""; // Google Analytics를 쓰려면 여기에 G-XXXXXXXXXX 입력
+function track(name,params={}){try{if(typeof gtag==="function")gtag("event",name,params)}catch(e){}}
+function resultUrl(){if(!last)return location.href;const u=new URL(location.href);u.search="";u.hash="";u.searchParams.set("r",`${Math.round(last[0])},${Math.round(last[1])}`);return u.toString()}
+function shareText(){const ty=TY[lang][tp(last)];return `BOND 28\n${ty[0]} · ${ty[1]}\n${ty[2]}\n${resultUrl()}`}
+async function copyResult(){try{await navigator.clipboard.writeText(shareText());track("share_copy");alert(lang==="ko"?"결과 링크가 복사되었습니다.":lang==="en"?"Your result link was copied.":lang==="zh"?"结果链接已复制。":"結果リンクをコピーしました。")}catch(e){}}
+async function share(p){const url=resultUrl(),txt=shareText(),e=encodeURIComponent;track("share_click",{channel:p});if(p==="line")return window.open(`https://social-plugins.line.me/lineit/share?url=${e(url)}&text=${e(txt)}`,"_blank");if(p==="wa")return window.open(`https://wa.me/?text=${e(txt)}`,"_blank");
+// 카카오톡은 별도 SDK 연결 전까지 Web Share/복사 방식으로 동작합니다.
+if(navigator.share){try{await navigator.share({title:"BOND 28",text:txt,url});return}catch(e){}}
+try{await navigator.clipboard.writeText(txt);alert(lang==="ko"?"결과 링크가 복사되었습니다. 카카오톡에 붙여넣어 공유하세요.":lang==="en"?"The result link was copied. Paste it into your chat.":lang==="zh"?"结果链接已复制，请粘贴到聊天中分享。":"結果リンクをコピーしました。チャットに貼り付けて共有してください。")}catch(e){}}
+function restart(){SHARED_MODE.active=false;try{localStorage.removeItem("bond_progress1")}catch(e){}show("intro");$("timer").textContent="00:00"}
 function wrapT(c,t,x,y,w,lh){let l="";for(const ch of t){if(c.measureText(l+ch).width>w){c.fillText(l,x,y);l=ch;y+=lh}else l+=ch}c.fillText(l,x,y)}
 function cardImg(){const n=last,t=tp(n),ty=TY[lang][t],W=1080,cv=document.createElement("canvas");cv.width=W;cv.height=1350;const c=cv.getContext("2d");
 c.fillStyle="#0e1220";c.fillRect(0,0,W,1350);c.textAlign="left";c.fillStyle="#98a0b8";c.font="700 26px sans-serif";c.fillText("BOND 28",72,100);
@@ -143,18 +149,8 @@ c.fillStyle="#596474";c.font="500 22px sans-serif";c.fillText("BOND 28",W/2,1300
 function cardOverlay(){const cv=cardImg(),url=cv.toDataURL("image/png"),o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99;background:#000d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px";
 o.innerHTML=`<img src="${url}" style="max-width:100%;max-height:76vh;border-radius:14px"><div style="color:#c4cad4;font-size:13px">${UI[lang].save}</div><div style="display:flex;gap:10px"><button class="btn primary" id="cs">${UI[lang].shr}</button><button class="btn ghost" id="cx">✕</button></div>`;document.body.appendChild(o);o.querySelector("#cx").onclick=()=>o.remove();
 o.querySelector("#cs").onclick=()=>cv.toBlob(b=>{const f=new File([b],"bond28.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],text:shareText()}).catch(()=>{});else{const a=document.createElement("a");a.href=url;a.download="bond28.png";a.click()}})}
+function loadSharedResult(){try{const u=new URL(location.href),raw=u.searchParams.get("r");if(!raw)return false;const m=raw.match(/^(\d{1,3}),(\d{1,3})$/);if(!m)return false;const a=Math.max(0,Math.min(100,Number(m[1]))),d=Math.max(0,Math.min(100,Number(m[2])));last=[a,d];SHARED_MODE.active=true;renderResult(last);$("sharedBanner").classList.add("show");$("sharedTitle").textContent=UI[lang].sharedTitle;$("sharedDesc").textContent=UI[lang].sharedDesc;$("sharedStart").textContent=UI[lang].sharedStart;show("result");track("shared_result_view",{type:TY[lang][tp(last)][0]});return true}catch(e){return false}}
 window.addEventListener("load",()=>{let l="ko";try{l=localStorage.getItem("bond_lang")||"ko"}catch(e){}if(!UI[l])l="ko";$("lang").value=l;setLang(l);
-const shared=new URLSearchParams(location.search).get("r");if(shared&&/^\d{1,3}-\d{1,3}$/.test(shared)){const n=shared.split("-").map(Number);if(n.every(v=>v>=0&&v<=100)){renderResult(n);show("result");return}}
+if(loadSharedResult())return;
 try{const x=JSON.parse(localStorage.getItem("bond_progress1")||"null");if(x&&x.qs&&x.qs.length===28&&confirm(UI[lang].resume)){qs=x.qs;ans=x.ans;idx=Math.min(x.idx||0,27);startAt=x.startAt||Date.now();show("test");renderQ();tick()}else if(x)localStorage.removeItem("bond_progress1")}catch(e){}});
-</script>
-<script>
-(function () {
-  try {
-    var p = new URLSearchParams(window.location.search);
-    var r = p.get("r");
-    if (r) window.BOND28_SHARED_RESULT = r;
-  } catch (e) {}
-})();
-</script>
-
-</body></html>
+</script></body></html>
