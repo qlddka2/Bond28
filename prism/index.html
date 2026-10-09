@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PRISM 56 — 성향 진단</title>
+<style>
+:root{--bg:#0b0d12;--line:#2a3140;--text:#f3f5f7;--muted:#9ca6b5;--accent:#7c5cff;--accent2:#31d7b2}
+*{box-sizing:border-box}html,body{margin:0;background:radial-gradient(circle at 50% -10%,#20213c 0,#0b0d12 45%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif}
+body{min-height:100vh}.wrap{max-width:760px;margin:auto;padding:calc(24px + env(safe-area-inset-top)) 18px calc(70px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}.logo{font-weight:800;letter-spacing:.12em;font-size:13px}.timer{color:var(--muted);font-size:13px}
+.screen{display:none}.screen.active{display:block}.hero{padding:44px 4px 20px}.eyebrow{color:var(--accent2);font-weight:700;font-size:12px;letter-spacing:.14em}
+.hero h1{font-size:clamp(40px,11vw,72px);line-height:.95;margin:14px 0 22px;letter-spacing:-.06em}.hero h1 em{font-style:normal;background:linear-gradient(90deg,#9c7dff,#42d7bc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#c4cad4;line-height:1.75;margin:0}
+.card,.pc{background:rgba(18,22,32,.9);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:16px}
+.axis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}.axis{background:#171c27;border-radius:14px;padding:14px;border-left:4px solid}.axis b{display:block;font-size:14px;margin-bottom:4px}.axis span{color:var(--muted);font-size:12px}
+.btn{border:0;border-radius:14px;padding:14px 18px;background:var(--text);color:#090b0f;font-weight:800;font-size:15px;cursor:pointer}.btn.primary{background:var(--accent);color:#fff}.btn.ghost{background:#1a1f2a;color:#dfe4eb;border:1px solid var(--line)}
+.actions{display:flex;gap:10px;margin-top:20px}.actions .btn{flex:1}.pg{height:5px;background:#202632;border-radius:99px;overflow:hidden;margin:8px 0 20px}.pg i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.qnum{color:var(--accent2);font-size:12px;font-weight:800;letter-spacing:.12em}
+.question{font-size:clamp(22px,6vw,30px);line-height:1.35;letter-spacing:-.025em;margin:16px 0 26px}.choices{display:grid;gap:10px}.choice{position:relative}.choice input{position:absolute;opacity:0}
+.choice label{-webkit-tap-highlight-color:transparent;min-height:46px;display:flex;align-items:center;border:1px solid #2b3341;background:#151a24;border-radius:15px;padding:11px 16px;cursor:pointer}.choice input:checked+label{border-color:var(--accent);background:#211c3b;box-shadow:0 0 0 1px var(--accent) inset}
+.rh{padding:30px 6px 18px;text-align:center}.kick{font-size:11px;letter-spacing:.22em;color:#8f9aaa;font-weight:800}
+.code{font-size:clamp(48px,17vw,92px);font-weight:900;letter-spacing:.12em;margin:14px 0 6px}.legend{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 16px}.lg{border:1px solid;border-radius:99px;padding:4px 10px;font-size:11px}.lg b{font-size:13px;margin-right:2px}
+.tn{font-size:clamp(25px,7vw,36px);font-weight:850;letter-spacing:-.045em}.tl{max-width:620px;margin:12px auto 0;color:#b9c1cc;line-height:1.7;font-size:14px}
+.ct{display:flex;justify-content:space-between;margin-bottom:20px;font-size:11px;letter-spacing:.14em;font-weight:850}.ct small{color:#697384;font-weight:400}
+.br{margin-bottom:22px}.bl{display:flex;justify-content:space-between;align-items:end;margin-bottom:8px;font-size:13px;color:#7d8798}.bl b{color:#fff}.bl .an{font-size:10px;color:#687384}
+.tr{height:20px;border-radius:99px;background:#252b35;position:relative;overflow:hidden}.fill{position:absolute;top:0;height:100%;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.mid{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#fff6;z-index:2}.sv{display:flex;align-items:baseline;justify-content:space-between;font-size:11px;color:#8e99a9;margin-top:6px}.sv b{color:#fff}
+.rd{border-top:1px solid #252c38;padding-top:16px;margin-top:16px;border-left:3px solid;padding-left:12px}.rd:first-child{border-top:0;margin-top:0}.rd h3{font-size:17px;font-weight:900;margin:0 0 8px}.rd p{font-size:13px;line-height:1.7;color:#b4bcc9;margin:0 0 6px}
+.mini{font-size:12px;line-height:1.7;color:#8e99a9;margin:0}.sh{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}.sh .btn{color:#fff;font-size:13px;padding:12px}
+.footer{text-align:center;color:#687384;font-size:11px;line-height:1.7;margin-top:22px}
+@media(max-width:520px){.axis-grid{grid-template-columns:1fr}.actions{position:sticky;bottom:8px;background:linear-gradient(transparent,#0b0d12 25%);padding-top:14px}}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#2a3340;color:#fff;padding:10px 16px;border-radius:12px;font-size:13px;z-index:99}.btn.hubb{background:#e9ecf1;color:#10131a}</style><!--SEO-HEAD-START--><meta name="description" content="PRISM 56은 56개 문항으로 복지↔시장, 진보↔보수, 자유↔질서, 성평등 적극↔성중립 4개 축에서 나의 가치관 지도를 그려 보는 무료 성향 테스트입니다."><link rel="stylesheet" href="../seo.css"><!--SEO-HEAD-END--></head><body><div class="wrap">
+<div class="top"><div class="logo">PRISM 56</div><div style="display:flex;gap:10px;align-items:center"><select id="lang" onchange="setLang(this.value)" style="background:#1a1f2a;color:#dfe4eb;border:1px solid #2a3140;border-radius:10px;padding:5px 8px;font-size:12px"><option value="ko">한국어</option><option value="en">English</option><option value="zh">中文</option><option value="ja">日本語</option></select><div class="timer" id="timer">00:00</div></div></div>
+
+<section id="intro" class="screen active"><div class="hero">
+<div class="eyebrow">VALUES · WORLDVIEW · PERSONALITY</div>
+<h1>당신은<br><em>어떤 방향</em>으로<br>세상을 보는가?</h1>
+<p>정답이 없는 56개의 질문으로 당신의 가치관을 네 개의 축에 배치합니다. 한쪽으로 몰아넣는 대신, 서로 다른 가치가 어떻게 조합되어 있는지를 보여줍니다.</p></div>
+<div class="card"><b>검사 방식</b><div class="axis-grid" id="axgrid"></div>
+<p class="mini" style="margin-top:16px">사회적으로 바람직한 답보다 실제 생각에 가깝게 · 약 8~10분 · 문항은 무작위로 섞입니다</p>
+<div class="actions"><button class="btn primary" onclick="start()">검사 시작</button></div></div><!--SEO-ART-START--><section class="seo" aria-label="테스트 안내"><h2>PRISM 56 가치관 지도 안내</h2>
+<p>PRISM 56은 정답이 없는 56개의 질문으로 나의 가치관을 네 개의 축에 배치해 보는 자기이해용 테스트입니다. 한쪽으로 몰아넣어 “당신은 ○○ 성향”이라고 단정하는 대신, 서로 다른 가치가 내 안에서 어떻게 조합되어 있는지를 보여 주는 데 초점을 둡니다. 소요 시간은 약 8~10분입니다.</p>
+<h3>네 개의 축</h3>
+<ul>
+<li><b>복지 ↔ 시장</b>: 약자 보호와 세금, 성과에 따른 보상에 대한 생각</li>
+<li><b>진보 ↔ 보수</b>: 변화와 개방, 전통과 가족에 대한 생각</li>
+<li><b>자유 ↔ 질서</b>: 개인의 선택과 규칙, 집단의 이익에 대한 생각</li>
+<li><b>성평등 적극 ↔ 성중립</b>: 성별 격차와 할당, 차별 인식에 대한 생각</li>
+</ul>
+<p>각 축에서 가운데를 기준으로 어느 쪽으로, 얼마나 기울어 있는지를 최대 3단계로 표시합니다. 결과에는 유형 이름과 닉네임, 축별 해설(특징·강점·주의할 점)이 함께 나옵니다.</p>
+<h3>이렇게 활용해 보세요</h3>
+<ul>
+<li>사회적으로 바람직해 보이는 답보다 <b>평소 실제 생각에 가까운 답</b>을 고르세요.</li>
+<li>결과는 정답이나 우열이 아닙니다. 같은 문제에 다르게 생각하는 사람과 대화할 때 “내 기준은 이쪽이구나” 하고 알아차리는 참고 자료로 쓰면 좋습니다.</li>
+<li>친구와 결과를 비교해 보면 어디서 의견이 갈리는지 보입니다.</li>
+</ul>
+<h3>자주 묻는 질문</h3>
+<p class="q">Q. 특정 정당이나 정치 성향을 판정하나요?</p><p>아니요. 특정 정당이나 진영을 판정하거나 추천하지 않으며, 어떤 결과도 옳고 그름을 의미하지 않습니다.</p>
+<p class="q">Q. 결과가 서버에 저장되나요?</p><p>저장하지 않습니다. 응답과 결과는 내 기기와 공유 링크에만 담깁니다.</p>
+<p class="q">Q. 중간에 나가면 어떻게 되나요?</p><p>진행 상황은 이 기기에 임시 저장되어 이어서 할 수 있습니다.</p>
+<p class="nb">이 테스트는 오락과 자기이해를 위한 비임상 도구이며, 학술적으로 검증된 정치 성향 검사가 아닙니다.</p></section><!--SEO-ART-END--></section>
+
+<section id="test" class="screen">
+<div class="meta"><span id="count"></span><span>약 10분</span></div><div class="pg"><i id="progress"></i></div>
+<div class="card"><div class="qnum" id="qnum"></div><div class="question" id="question"></div><div class="choices" id="choices"></div></div>
+<div class="actions"><button class="btn ghost" id="prev" onclick="prevQ()">이전</button><button class="btn primary" id="next" onclick="nextQ()">다음</button></div></section>
+
+<section id="result" class="screen"><div id="sbanner" class="pc" style="display:none;margin:0 0 8px"><p class="mini" data-x="sb" style="margin-bottom:12px"></p><button class="btn primary" style="width:100%" onclick="leaveShared()" data-x="sbtn"></button></div>
+<div class="rh"><div class="kick">PRISM PROFILE</div><div class="code" id="profileCode"></div><div class="legend" id="codeLegend"></div><div id="resultArt" style="text-align:center;margin:0 0 18px"></div><div class="tn" id="typeName"></div><div id="nick" style="font-size:16px;font-weight:800;color:#c4cad4;margin-top:8px"></div><p class="tl" id="summary"></p></div>
+<div class="pc"><div class="ct"><span>VALUE MAP</span><small>가운데에서 내 쪽으로 채워진 정도 = 성향의 강도 (한쪽 최대 3단계)</small></div><div id="bars"></div></div>
+<div class="pc"><div class="ct"><span>YOUR READ</span><small>두드러진 순서</small></div><div id="insights"></div></div>
+<div class="pc own"><div class="ct"><span>SHARE</span></div>
+<div class="sh">
+<button class="btn" style="background:#c9a800;color:#111" onclick="share('kakao')">카카오톡</button>
+<button class="btn" style="background:#07a84f" onclick="share('wechat')">WeChat</button>
+<button class="btn" style="background:#06b94a" onclick="share('line')">LINE</button>
+<button class="btn" style="background:#1fa855" onclick="share('wa')">WhatsApp</button></div></div>
+<div class="pc"><div class="ct"><span>ABOUT THIS RESULT</span></div>
+<p class="mini">점수는 우열이나 정상/비정상을 의미하지 않습니다. 서로 다른 가치가 동시에 높은 사람도 있을 수 있으며, 실제 행동은 상황·경험·환경에 따라 달라질 수 있습니다. 이 검사는 자기이해를 위한 비임상적 성향 도구입니다.</p>
+<div class="actions"><button class="btn ghost" onclick="restart()">다시 검사</button><button class="btn ghost" onclick="copyResult()">결과 복사</button><button class="btn primary" onclick="downloadShareCard()">결과 카드</button></div>
+<div class="actions"><button class="btn hubb" onclick="goHub()" data-x="other"></button></div></div>
+<div class="footer">PRISM 56 · 한 사람을 하나의 라벨로 설명하지 않습니다.<br>결과를 서버로 전송하거나 저장하지 않습니다.</div></section>
+<!--SEO-FOOT-START--><nav class="sfoot" aria-label="사이트 정보"><a href="../about/">소개</a>·<a href="../privacy/">개인정보처리방침</a>·<a href="../terms/">이용약관</a>·<a href="../contact/">문의</a><br>© 2026 TEST LAB · 모든 테스트는 오락·자기이해용이며 진단이 아닙니다.</nav><!--SEO-FOOT-END--></div>
+<script src="../config.js"></script>
+<script src="../exit.js"></script>
+<script>
+const AXES={
+econ:{name:"복지 ↔ 시장",left:"복지",right:"시장",sub:"서민·약자 보호, 세금, 성과 보상",col:["#ff9d00","#ffd24d"]},
+social:{name:"진보 ↔ 보수",left:"진보",right:"보수",sub:"변화, 개방, 전통, 가족",col:["#7c5cff","#b79cff"]},
+liberty:{name:"자유 ↔ 질서",left:"자유",right:"질서",sub:"개인의 선택, 규칙, 집단의 이익",col:["#2f8cff","#7fc0ff"]},
+gender:{name:"성평등 적극 ↔ 성중립",left:"성평등 적극",right:"성중립",sub:"성별 격차, 할당, 차별 인식",col:["#8bd450","#c4ee8f"]}};
+const AM={change:"social",tradition:"social",equal:"econ",market:"econ",community:"liberty",control:"liberty",gender:"gender"};
+// 해설: [왼쪽 성향, 오른쪽 성향] — 특징 / 강점 / 주의할 점
+const DEEP={
+change:["기존 방식이 맞지 않으면 바꾸는 쪽이 낫다고 보는 편입니다. 문제를 일찍 발견하고 새 방식을 시도하는 데 강하지만, 변화의 속도가 주변의 준비 속도를 앞지르면 마찰이 생길 수 있습니다. 바꾸기 전 '무엇이 깨질 수 있는가'를 한 번 더 점검하면 설득력이 커집니다.",
+"예측 가능성과 단계적 개선을 신뢰하는 편입니다. 위험을 줄이고 합의를 쌓는 데 강하지만, 오래된 방식이 이미 문제를 일으키고 있을 때는 대응이 늦어질 수 있습니다. '언제까지 지켜볼 것인가'라는 기준을 정해두면 균형이 잡힙니다."],
+equal:["출발선의 차이를 줄여야 경쟁도 공정하다고 보는 편입니다. 기회의 사각지대를 잘 보지만, 차등 보상이 주는 동기부여 효과를 과소평가하지 않는지도 함께 살펴볼 만합니다.",
+"노력과 성과에 따른 차이를 자연스럽게 받아들이는 편입니다. 동기와 책임을 중시하는 장점이 있지만, 경쟁 이전의 조건 차이가 결과에 미치는 영향을 놓치지 않는 것이 중요합니다."],
+market:["개인이 통제하기 어려운 위험은 함께 나누는 것이 사회를 지탱한다고 보는 편입니다. 안전망의 가치를 잘 알아보지만, 재원과 지속 가능성, 정책의 부작용까지 같이 따져보면 더 단단해집니다.",
+"선택의 자유와 시장의 효율을 신뢰하는 편입니다. 혁신과 자율을 살리는 데 강하지만, 시장이 해결하지 못하는 위험(질병·실직 등)에서 누가 버틸 수 있는지도 함께 고려해보세요."],
+tradition:["다양한 삶의 방식과 새로운 문화에 열려 있는 편입니다. 포용력이 장점이지만, 검증된 관습이 지켜 온 안정감이나 공동체의 연속성이 주는 가치도 함께 살피면 설득의 폭이 넓어집니다.",
+"오래 검증된 규범과 연속성에서 안정감을 얻는 편입니다. 신뢰와 예절을 지키는 데 강하지만, 규범이 바뀌는 흐름 속에서 소외되는 사람이 없는지도 가끔 돌아볼 필요가 있습니다."],
+community:["삶의 중요한 선택은 스스로 내리고 책임지겠다는 독립성이 두드러집니다. 자기주도성이 강점이지만, 관계 속에서 도움을 주고받는 비용과 이득을 가볍게 보지 않는 것이 중요합니다.",
+"관계와 공동의 이익을 개인의 편의보다 앞에 두는 편입니다. 신뢰와 협력을 만드는 데 강하지만, 자신의 한계와 개인 선택권도 지켜야 오래 갈 수 있습니다."],
+control:["성인이 감당할 수 있는 위험이라면 자유롭게 선택해야 한다고 보는 편입니다. 책임을 전제로 한 자율을 중시하지만, 피해가 개인을 넘어 퍼질 수 있는 영역에서는 최소한의 공통 규칙이 필요한 경우도 있습니다.",
+"큰 피해를 막을 수 있다면 규칙과 예방을 우선하는 편입니다. 안전과 예측 가능성에 강하지만, 규칙이 늘수록 개인의 판단과 시도의 기회가 줄어드는 비용도 함께 보는 것이 좋습니다."],
+gender:["성별에 따른 구조적 격차를 풀려면 제도적 개입이 필요하다고 보는 편입니다. 보이지 않는 불평등을 포착하는 데 강하지만, 정책의 실제 효과와 다른 집단이 느끼는 공정성도 함께 점검하면 설득력이 커집니다.","성별과 무관하게 같은 기준을 적용하는 것이 평등이라고 보는 편입니다. 개인의 선택과 형평성에 민감하지만, 통계로 남아 있는 격차나 구조적 요인이 있는지도 함께 살펴보면 균형이 잡힙니다."]};
+const MID="이 축에서는 한쪽으로 크게 기울지 않았습니다. 상황에 따라 두 가치를 유연하게 오가는 편이며, 어떤 쟁점이냐에 따라 달라질 수 있습니다.";
+const raw=[
+["change",0,"기득권이 막고 있는 개혁은 반발이 크더라도 밀어붙여야 한다."],
+["change",1,"개혁이라는 이름으로 한꺼번에 뜯어고치다가 사회가 더 나빠진 사례가 많다."],
+["change",0,"낡은 관행은 '원래 그랬으니까'라는 이유로 지켜질 이유가 없다."],
+["change",1,"급하게 만든 제도는 나중에 더 큰 비용으로 돌아오니 천천히 검증하며 바꿔야 한다."],
+["change",0,"문제가 보이면 완벽한 대안이 나오기 전이라도 일단 바꿔 보는 편이 낫다."],
+["change",1,"오래 유지된 제도에는 눈에 보이지 않는 이유가 있을 수 있어, 바꾸기 전에 그 이유부터 확인해야 한다."],
+["change",0,"제도가 불공정하다면 바꾸는 과정에서 생기는 혼란은 감수할 만한 비용이다."],
+["change",1,"사회적 합의 없이 밀어붙인 변화는 취지가 좋아도 결국 반발만 키운다."],
+["equal",0,"금수저와 흙수저의 격차는 개인의 노력만으로 넘기 어려운 수준이 되었다."],
+["equal",1,"잘하는 사람이 훨씬 더 많이 가져가는 건 불공평이 아니라 당연한 보상이다."],
+["equal",0,"집안 형편 때문에 교육의 질이 갈리는 건 불공정하다."],
+["equal",1,"노력한 만큼 성과가 갈리는 것을 불평등이라 부르면 열심히 할 이유가 사라진다."],
+["equal",0,"상속과 증여로 대물림되는 부는 지금보다 더 강하게 과세해야 한다."],
+["equal",1,"격차를 줄이려고 잘하는 사람의 몫을 덜어내는 건 역차별이다."],
+["equal",0,"같은 일을 해도 소득 격차가 지나치게 크다면 사회가 조정할 필요가 있다."],
+["equal",1,"공정한 경쟁의 규칙만 지켜진다면 결과가 크게 갈려도 받아들여야 한다."],
+["market",0,"부자와 대기업은 지금보다 훨씬 더 많은 세금을 내야 한다."],
+["market",1,"복지를 늘리면 결국 일하는 사람들의 부담만 커진다."],
+["market",0,"의료·돌봄·주거는 시장에 맡기지 말고 국가가 책임져야 한다."],
+["market",1,"같은 금액이라면 공공서비스보다 개인이 직접 쓰는 편이 대체로 더 효율적이다."],
+["market",0,"세금 부담이 늘더라도 소득이 높은 사람이 더 많이 부담하는 구조가 바람직하다."],
+["market",1,"최저임금을 올리는 것보다 일자리를 늘리는 것이 약자에게 더 도움이 된다."],
+["market",0,"불황일수록 나랏돈을 풀어서라도 취약계층을 지켜야 한다."],
+["market",1,"공기업과 정부 규제를 줄이고 민간에 맡기면 서비스가 더 좋아진다."],
+["tradition",0,"결혼하지 않거나 아이를 낳지 않는 선택도 완전히 존중받아야 한다."],
+["tradition",1,"결혼·출산·가족을 소중히 여기는 문화는 사회가 적극적으로 지켜야 한다."],
+["tradition",0,"동성 커플도 결혼한 부부와 같은 법적 권리를 가져야 한다."],
+["tradition",1,"아이는 엄마·아빠가 있는 가정에서 자라는 것이 가장 바람직하다."],
+["tradition",0,"전통이라는 이유만으로 의례나 관습에 참여하라고 요구하는 것은 바람직하지 않다."],
+["tradition",1,"명절·제사 같은 전통 의례는 앞으로도 이어가야 한다."],
+["tradition",0,"다양한 문화가 섞이면 사회는 더 풍부해진다."],
+["tradition",1,"사회의 정체성을 지키려면 이민과 외국인 유입은 신중히 조절해야 한다."],
+["community",0,"회사나 집단의 분위기보다 내 시간과 내 삶이 먼저다."],
+["community",1,"조직이 어려울 땐 개인이 손해를 좀 보더라도 함께 감수하는 게 맞다."],
+["community",0,"집단의 결정이 내 생각과 다르더라도 따르기보다 내 방식을 지키는 편이 낫다."],
+["community",1,"개인의 편의와 공동의 이익이 부딪히면 대체로 공동의 이익이 먼저다."],
+["community",0,"회식이나 야근 같은 조직의 암묵적 요구는 거절해도 된다."],
+["community",1,"나라가 어려울 땐 개인의 희생이 따르더라도 함께 극복하는 게 맞다."],
+["community",0,"가족이라도 결혼·진로 같은 내 결정에 간섭하면 선을 그어야 한다."],
+["community",1,"부모 부양이나 가족 돌봄은 개인의 선택이 아니라 자식의 도리이다."],
+["control",0,"나쁜 습관이나 위험한 취미도 본인이 책임진다면 국가가 막을 일이 아니다."],
+["control",1,"안전을 위해서라면 감시와 단속이 늘어나는 것도 어느 정도 받아들여야 한다."],
+["control",0,"본인에게만 해로운 행동을 법으로 막는 것은 지나친 간섭이다."],
+["control",1,"음주운전·마약 같은 범죄는 처벌 수위를 지금보다 훨씬 높여야 한다."],
+["control",0,"규제가 늘수록 사람들은 스스로 판단하지 않고 시키는 대로만 하게 된다."],
+["control",1,"사고가 난 뒤 책임을 묻는 것보다 미리 막는 규제가 낫다."],
+["control",0,"국가는 개인이 스스로 감당하겠다는 위험까지 일일이 막아서는 안 된다."],
+["control",1,"새로운 기술은 위험이 확인된 뒤 막기보다, 안전이 검증된 뒤에 허용해야 한다."],
+["gender",0,"여전히 사회 곳곳에는 여성이 겪는 구조적 불평등이 남아 있다."],
+["gender",1,"이제 성별을 이유로 한 제도적 차별은 대부분 사라졌고, 남은 문제는 개인 차원이다."],
+["gender",0,"성별 격차가 크다면 할당제 같은 적극적 조치도 필요하다."],
+["gender",1,"성별을 기준으로 한 우대·할당은 오히려 새로운 불공정을 만든다."],
+["gender",0,"성범죄와 직장 내 성차별 문제는 지금보다 더 엄격하게 다뤄져야 한다."],
+["gender",1,"성별과 무관하게 모두에게 같은 기준을 적용하는 것이 진짜 평등이다."],
+["gender",0,"임금·승진의 성별 격차는 개인의 선택만으로는 설명하기 어렵다."],
+["gender",1,"병역 같은 의무는 성별에 관계없이 동일하게 적용되어야 한다."]];
+// raw 두 번째 값: 0=왼쪽 성향 문항(동의할수록 점수↓), 1=오른쪽 성향 문항(동의할수록 점수↑)
+let questions=[],answers=[],idx=0,startAt=0,ti=null;
+const CL=["전혀 동의하지 않음","동의하지 않음","약간 동의하지 않음","보통","약간 동의함","동의함","매우 동의함"];
+const $=id=>document.getElementById(id);
+document.getElementById("axgrid").innerHTML=Object.values(AXES).map(a=>`<div class="axis" style="border-color:${a.col[0]}"><b>${a.name}</b><span>${a.sub}</span></div>`).join("");
+function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function persist(){try{localStorage.setItem("prism48_progress8",JSON.stringify({questions,answers,idx,startAt}))}catch(e){}}
+function tick(){clearInterval(ti);ti=setInterval(()=>{let s=Math.floor((Date.now()-startAt)/1000);$("timer").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},1000)}
+function restore(){try{const x=JSON.parse(localStorage.getItem("prism48_progress8")||"null");
+if(x&&x.questions&&x.questions.length===56&&Array.isArray(x.answers)){
+if(confirm("이전에 진행하던 검사가 있습니다. 이어서 진행할까요?")){questions=x.questions;answers=x.answers;idx=Math.min(x.idx||0,55);startAt=x.startAt||Date.now();show("test");renderQ();tick()}else localStorage.removeItem("prism48_progress8")}}catch(e){}}
+function start(){questions=shuffle(raw.map((x,i)=>({axis:AM[x[0]],reverse:x[1]===0,text:x[2],i})));
+answers=Array(56).fill(null);idx=0;startAt=Date.now();persist();show("test");renderQ();tick()}
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");window.scrollTo(0,0)}
+function renderQ(){const q=questions[idx];$("count").textContent=`${idx+1} / 56`;$("qnum").textContent=`QUESTION ${String(idx+1).padStart(2,"0")}`;
+$("question").textContent=qtext(q);$("progress").style.width=((idx+1)/56*100)+"%";$("prev").disabled=idx===0;$("next").textContent=idx===55?T().fin:T().next;
+$("choices").innerHTML=T().cl.map((t,i)=>`<div class="choice"><input ${answers[idx]===i+1?"checked":""} type="radio" name="answer" id="c${i}" value="${i+1}"><label for="c${i}">${t}</label></div>`).join("")}
+function save(){const el=document.querySelector('input[name="answer"]:checked');if(el){answers[idx]=+el.value;persist()}}
+function nextQ(){save();if(answers[idx]==null){toast(XT[lang].pick);return}if(idx<55){idx++;persist();renderQ()}else finish()}
+function prevQ(){save();if(idx>0){idx--;renderQ()}}
+function finish(){clearInterval(ti);try{localStorage.removeItem("prism48_progress8")}catch(e){}
+const sc={},ct={};Object.keys(AXES).forEach(k=>sc[k]=0);
+questions.forEach((q,i)=>{let v=answers[i];if(q.reverse)v=8-v;sc[q.axis]+=v;ct[q.axis]=(ct[q.axis]||0)+1});
+const n={};Object.keys(sc).forEach(k=>n[k]=Math.round(((sc[k]-ct[k])/(6*ct[k]))*100));
+const st=answers.filter(v=>v===1||v===7).length/56;
+window.rs=st>0.65?"극단 응답이 많은 편":st<0.08?"중간 응답이 많은 편":"균형적인 응답 분포";
+renderResult(n);show("result")}
+function lvl(d){const i=d>=36?0:d>=22?1:d>=8?2:3;return lang==="ko"?["강한","뚜렷한","약한","중립에 가까운"][i]:LV[lang][i]}
+function renderResult(n){window.lastScores=n;const keys=Object.keys(AXES);
+const sorted=keys.slice().sort((a,b)=>Math.abs(n[b]-50)-Math.abs(n[a]-50));
+const L={econ:["B","M"],social:["I","O"],liberty:["L","D"],gender:["A","E"]};
+const cd=keys.map(k=>codeCh(k,n[k],L)).join("");
+$("profileCode").innerHTML=keys.map(k=>{const v=n[k],d=Math.abs(v-50);return `<span style="color:${d<8?"#667184":tx(v)};opacity:${d<22&&d>=8?.8:1};text-shadow:0 0 18px ${d<8?"transparent":tx(v)+"66"}">${codeCh(k,v,L)}</span>`}).join("");
+renderArt(n,L);$("codeLegend").innerHTML=keys.map(k=>{const a=AX(k),v=n[k],d=Math.abs(v-50),c=d<8?"#7d8798":tx(v);return `<span class="lg" style="border-color:${c};color:${c}"><b>${codeCh(k,v,L)}</b> ${d<8?a.left+"/"+a.right:(v>50?a.right:a.left)}</span>`}).join("");
+$("typeName").textContent=reading(cd);$("nick").textContent=nick(n);
+const stt=sorted.filter(k=>L5(n[k])>0).slice(0,2).map(k=>HL[lang][k][n[k]>50?1:0]);
+$("summary").textContent=(stt.length?stt.join(" "):HLB[lang])+RS();
+$("bars").innerHTML=keys.map(k=>{const a=AX(k),v=n[k],d=Math.abs(v-50),lv=L5(v),r=v>50,cc=cl(v),dim='color:#667184;font-size:12px',on=`color:${tx(v)};font-weight:900;font-size:18px`;
+return `<div class="br"><div class="bl"><span style="${lv&&!r?on:dim}">${a.left}</span><span class="an">${a.name}</span><span style="${lv&&r?on:dim}">${a.right}</span></div>
+<div class="tr"><div class="fill" data-w="${(lv*50/3).toFixed(1)}" style="${r?'left':'right'}:50%;width:0;display:flex;align-items:center;justify-content:${r?'flex-end':'flex-start'};padding:0 14px;color:#fff;font-weight:800;font-size:13px;overflow:hidden;border-radius:${r?'0 99px 99px 0':'99px 0 0 99px'};background:${cc}">${lv||""}</div><div class="mid"></div></div>
+<div class="sv" style="justify-content:center"><span style="color:${lv?tx(v):'#8e99a9'};font-weight:800;font-size:12px">${lv?lvl(d)+(lang==="ko"?" "+(r?a.right:a.left):""):"—"}</span></div></div>`}).join("");
+setTimeout(()=>document.querySelectorAll(".fill").forEach(f=>f.style.width=f.dataset.w+"%"),60);
+$("insights").innerHTML=sorted.map(k=>{const a=AX(k),v=n[k],d=Math.abs(v-50),r=v>=50,side=r?a.right:a.left;
+return `<div class="rd" style="border-color:${tx(v)}"><h3 style="color:${tx(v)}">${a.name} · ${d<8?(lang==="ko"?"균형":BAL[lang]):side+(lang==="ko"?" 성향":"")}</h3>${lang==="ko"?`<p>${a.sub}에 관한 축입니다. ${d<8?"":`${lvl(d)} ${side} 쪽(중심에서 ${d}만큼)입니다.`}</p><p>${d<8?MID:DEEP2[k][r?1:0]}</p>`:`<p>${a.sub} — ${lvl(d)} ${d<8?"":side} (${d}/50)</p><p>${d<8?MIDT[lang]:DEEPT2[lang][k][r?1:0]}</p>`}</div>`}).join("")}
+function typeName(w){const h=x=>w.includes(x);
+if(h("변화")&&h("개방")&&h("개인"))return{title:"자유로운 개척자",line:"새로운 가능성을 열고 자신의 방식으로 움직이는 성향이 강합니다."};
+if(h("질서")&&h("전통")&&h("공동체"))return{title:"안정적인 수호자",line:"검증된 질서와 관계의 책임을 중요하게 생각하는 편입니다."};
+if(h("변화")&&h("경쟁")&&h("시장"))return{title:"성과형 혁신가",line:"변화를 두려워하지 않으면서 성과와 효율을 중시하는 경향이 있습니다."};
+if(h("평등")&&h("안정")&&h("공동체"))return{title:"사회적 조정자",line:"기회의 균형과 사회적 안전망, 공동체의 책임을 중요하게 보는 편입니다."};
+if(h("개방")&&h("개인")&&h("자율"))return{title:"자율적 자유주의자",line:"개인의 선택과 다양성을 넓게 인정하고 스스로 판단하려는 성향이 강합니다."};
+if(h("전통")&&h("공동체")&&h("통제"))return{title:"질서형 공동체주의자",line:"공동체의 안정과 명확한 규칙, 익숙한 사회적 기준을 중시하는 편입니다."};
+if(h("경쟁")&&h("시장")&&h("자율"))return{title:"실용적 경쟁주의자",line:"자율적인 선택과 경쟁의 결과를 비교적 자연스럽게 받아들이는 편입니다."};
+if(h("평등")&&h("개방")&&h("변화"))return{title:"진보적 평등주의자",line:"사회적 격차를 줄이고 새로운 가치와 변화를 적극적으로 받아들이는 성향입니다."};
+if(h("안정")&&h("전통")&&h("질서"))return{title:"현실적 보수주의자",line:"검증된 규칙과 사회적 안정성을 우선하는 현실적인 판단 성향이 있습니다."};
+if(h("개인")&&h("경쟁"))return{title:"독립적 성취가",line:"자신의 선택과 성과에 대한 책임을 중요하게 생각하는 편입니다."};
+if(h("공동체")&&h("평등"))return{title:"연대형 협력가",line:"사람 사이의 책임과 공정한 기회를 중요하게 여기는 성향이 있습니다."};
+return{title:"균형형 현실주의자",line:"한쪽 가치에 극단적으로 치우치기보다 상황에 따라 여러 가치를 조율하는 편입니다."}}
+function shareText(){return `PRISM 56 성향진단\n${$("nick").textContent} · ${$("profileCode").textContent} (${$("typeName").textContent})`}
+function copyResult(){const x=shareText()+"\n"+$("summary").textContent;navigator.clipboard?.writeText(x).then(()=>alert("결과가 복사되었습니다."))}
+function share(p){const url=location.href,txt=shareText(),e=encodeURIComponent;
+if(p==="line")return window.open(`https://social-plugins.line.me/lineit/share?url=${e(url)}&text=${e(txt)}`,"_blank");
+if(p==="wa")return window.open(`https://wa.me/?text=${e(txt+"\n"+url)}`,"_blank");
+// 카카오톡·위챗은 공식 웹 공유 URL이 없어(SDK/앱키 필요) 기기 공유창 → 안 되면 복사
+const msg=p==="kakao"?"카카오톡":"WeChat";
+if(navigator.share)navigator.share({title:"PRISM 56",text:txt,url}).catch(()=>{});
+else navigator.clipboard?.writeText(txt+"\n"+url).then(()=>alert(`링크가 복사되었습니다. ${msg} 대화창에 붙여넣어 주세요.`))}
+function restart(){try{localStorage.removeItem("prism48_progress8")}catch(e){}show("intro");$("timer").textContent="00:00"}
+let lang="ko";
+const q_=(s,i=0)=>document.querySelectorAll(s)[i];
+const SEL=[[".hero h1"],[".hero p"],["#intro .actions .btn"],["#intro .card>b"],["#intro .mini"],["#test .meta span",1],["#prev"],["#result .ct small"],["#result .ct small",1],["#result .actions .btn"],["#result .actions .btn",1],["#result .actions .btn",2],["#result .mini"],[".footer"]];
+const KOUI=SEL.map(s=>q_(...s).innerHTML);
+const TT={
+en:{ui:["Which <em>direction</em><br>do you see<br>the world?","56 questions with no right answers place your values on four axes. Instead of boxing you into one label, it shows how different values combine.","Start","How it works","Answer honestly, not with what sounds socially right · about 8–10 min · questions are shuffled","~10 min","Back","Fill grows from the center toward your side (up to 3 levels per side)","Most prominent first","Retake","Copy result","Result card","Scores don't imply better/worse or normal/abnormal. Several values can be high at once, and real behavior varies with context. This is a non-clinical tool for self-understanding.","PRISM 56 · One person is not one label.<br>Results are never sent or stored on a server."],next:"Next",fin:"See result",cl:["Strongly disagree","Disagree","Slightly disagree","Neutral","Slightly agree","Agree","Strongly agree"]},
+zh:{ui:["你从<em>哪个方向</em><br>看待<br>这个世界?","用56道没有标准答案的题目，把你的价值观放在四条轴上。不把你归为单一标签，而是呈现不同价值观如何组合。","开始测试","测试方式","请按真实想法作答，而非社会期待的答案 · 约8~10分钟 · 题目随机排序","约10分钟","上一题","从中线向你偏向的一侧填充（每侧最多3级）","按突出程度排序","重新测试","复制结果","结果卡片","分数不代表优劣或正常/异常。多个价值观可以同时偏高，实际行为也会因情境而异。本测试是用于自我了解的非临床工具。","PRISM 56 · 不用一个标签定义一个人。<br>结果不会上传或保存到服务器。"],next:"下一题",fin:"查看结果",cl:["完全不同意","不同意","有点不同意","一般","有点同意","同意","非常同意"]},
+ja:{ui:["あなたは<em>どの方向</em>から<br>世界を<br>見ていますか?","正解のない56の質問で、あなたの価値観を4つの軸に配置します。一つのラベルに押し込めず、異なる価値観がどう組み合わさっているかを示します。","診断開始","診断の流れ","望ましい答えではなく本音に近く · 約8〜10分 · 質問はランダム順です","約10分","戻る","中央から傾いた側へ色が伸びます（片側最大3段階）","目立つ順","もう一度","結果をコピー","結果カード","点数に優劣や正常/異常の意味はありません。複数の価値観が同時に高いこともあり、実際の行動は状況によって変わります。自己理解のための非臨床ツールです。","PRISM 56 · 一人の人を一つのラベルで説明しません。<br>結果はサーバーに送信・保存されません。"],next:"次へ",fin:"結果を見る",cl:["まったく同意しない","同意しない","やや同意しない","どちらでもない","やや同意する","同意する","とても同意する"]}};
+const AXT={
+en:[["Welfare ↔ Market","Welfare","Market","protecting ordinary people, taxes, rewards"],["Progressive ↔ Conservative","Progressive","Conservative","change, openness, tradition, family"],["Liberty ↔ Order","Liberty","Order","individual choice, rules, group interest"],["Active gender equality ↔ Gender-neutral","Active equality","Gender-neutral","gender gaps, quotas, discrimination"]],
+zh:[["福利 ↔ 市场","福利","市场","保护普通人、税收、绩效回报"],["进步 ↔ 保守","进步","保守","变化、开放、传统、家庭"],["自由 ↔ 秩序","自由","秩序","个人选择、规则、集体利益"],["积极性别平等 ↔ 性别中立","积极平等","性别中立","性别差距、配额、歧视认知"]],
+ja:[["福祉 ↔ 市場","福祉","市場","庶民の保護・税・成果報酬"],["進歩 ↔ 保守","進歩","保守","変化・開放・伝統・家族"],["自由 ↔ 秩序","自由","秩序","個人の選択・規則・集団の利益"],["積極的な男女平等 ↔ 性別中立","積極平等","性別中立","男女格差・クオータ・差別認識"]]};
+const LV={en:["Strong","Clear","Mild","Near neutral"],zh:["强烈","明显","轻微","接近中立"],ja:["強い","はっきり","弱い","中立に近い"]};
+const BAL={en:"Balanced",zh:"均衡",ja:"均衡"};
+const QT={
+en:"Reforms blocked by vested interests should be pushed through even with strong backlash.|Many cases show society getting worse after sweeping reforms done all at once.|'We've always done it this way' is no reason to keep an outdated practice.|Hastily made rules come back as bigger costs later, so change should be tested slowly.|When a problem is visible, it is better to start changing things even before a perfect alternative exists.|Long-standing institutions may have hidden reasons, so those should be understood before changing them.|If an institution is unfair, the disruption of changing it is a cost worth bearing.|Change pushed through without consensus ends up fueling backlash, however good the intent.|The gap between the privileged and the rest has become too big to overcome by effort alone.|When top performers take far more, that isn't unfair; it's a deserved reward.|It is unfair when the quality of education depends on family income.|If gaps that follow effort are called inequality, people lose the reason to work hard.|Wealth passed down through inheritance and gifts should be taxed more heavily than now.|Taking from high performers to narrow gaps is reverse discrimination.|If income gaps for similar work grow too large, society should step in to adjust them.|As long as the rules of competition are fair, widely different outcomes should be accepted.|The rich and big corporations should pay much more tax than they do now.|Expanding welfare ultimately just raises the burden on people who work.|Healthcare, care work and housing should be a state responsibility, not left to the market.|For the same amount of money, individuals spending it directly is generally more efficient than public services.|Even if taxes rise, it is desirable for higher earners to bear a larger share.|Creating more jobs helps the vulnerable more than raising the minimum wage.|In a downturn, the government should spend to protect vulnerable groups.|Cutting state enterprises and regulation and leaving it to the private sector improves services.|Choosing not to marry or have children should be fully respected.|The culture of marriage, childbearing and family should be actively protected by society.|Same-sex couples should have the same legal rights as married couples.|It is best for children to grow up in a home with a mother and a father.|Requiring people to join rituals or customs just because they are traditional is undesirable.|Traditional rites such as holiday gatherings and ancestral ceremonies should be carried on.|A society becomes richer when diverse cultures mix.|To protect national identity, immigration and foreign inflows must be carefully limited.|My own time and life come before the mood of my company or group.|When an organization is struggling, it's right for individuals to share some losses together.|When a group's decision differs from my view, it is better to stick to my own way than to follow it.|When personal convenience conflicts with the common good, the common good should generally come first.|It's fine to refuse unspoken organizational demands like after-work dinners or overtime.|When the country is in trouble, it's right to overcome it together even at personal sacrifice.|Even family should be kept at a distance if they interfere in my decisions on marriage or career.|Supporting parents and caring for family is a child's duty, not a personal choice.|Bad habits or risky hobbies aren't the state's business if the person takes responsibility.|For safety's sake, we should accept somewhat more surveillance and enforcement.|Banning by law a behavior that harms only the person doing it is excessive interference.|Penalties for crimes like drunk driving and drugs should be much harsher than now.|The more rules there are, the more people stop judging for themselves and just do as told.|Regulation that prevents accidents is better than assigning blame afterwards.|The state shouldn't block even the risks individuals choose to bear themselves.|New technologies should be allowed only after they are proven safe, not blocked after risks appear.|Structural inequality women face still remains in many parts of society.|Institutional discrimination based on gender has mostly disappeared; what remains is at the individual level.|Where gender gaps are large, affirmative measures such as quotas are also needed.|Preferences or quotas based on gender end up creating new unfairness.|Sexual crime and workplace sex discrimination should be handled more strictly than now.|Applying the same standard to everyone regardless of gender is true equality.|Gender gaps in pay and promotion can't be explained by individual choices alone.|Duties such as military service should apply equally regardless of gender.".split("|"),
+zh:"被既得利益者阻挠的改革，即使反对声很大也应推动。|很多事例表明，一次性大刀阔斧的改革反而让社会变得更糟。|“一直都是这样”不是维持过时做法的理由。|仓促制定的制度日后会付出更大代价，应慢慢验证后再改。|发现问题时，即使还没有完美的替代方案，也不妨先着手改变。|长期存在的制度可能有看不见的理由，改变之前应先弄清楚这些理由。|若制度不公平，改革过程中的混乱是值得承担的代价。|缺乏共识而强行推进的变革，即使初衷良好，最终也只会激化反弹。|出身优越者与普通人之间的差距，已大到仅凭个人努力难以跨越。|表现出色的人拿得多得多，并非不公，而是应得的回报。|教育质量因家庭条件而分化是不公平的。|如果把努力带来的差距也称为不平等，人们就没有努力的理由了。|通过继承和赠与代代相传的财富应比现在课以更重的税。|为缩小差距而削减表现好者的份额，是逆向歧视。|即使做同样的工作，若收入差距过大，社会也有必要加以调节。|只要竞争规则公平，即使结果差距很大也应接受。|富人和大企业应该比现在多缴得多的税。|扩大福利最终只会加重在职者的负担。|医疗、照护和住房不应交给市场，而应由国家负责。|同样的钱，由个人自己支配通常比提供公共服务更有效率。|即使税负增加，也应由高收入者承担更大比例。|与提高最低工资相比，增加就业岗位对弱势群体更有帮助。|越是经济萧条，越应不惜动用财政来保护弱势群体。|减少国企和政府管制，交给民间，服务会变得更好。|不婚、不生育的选择应当得到充分尊重。|婚姻、生育和家庭的文化应由社会积极守护。|同性伴侣应享有与已婚夫妻同等的法律权利。|孩子在有父母双方的家庭中成长最为理想。|仅因为是传统就要求人们参与仪式或习俗，并不可取。|节日聚会、祭祀等传统仪式应继续传承下去。|多元文化交融会让社会更加丰富。|为守护本国社会的认同，应谨慎控制移民和外国人的流入。|比起公司或集体的氛围，我自己的时间和生活更重要。|组织遇到困难时，个人也应一起承担一些损失才对。|当集体的决定与我的想法不同时，与其服从，不如坚持自己的方式。|当个人方便与共同利益冲突时，通常应以共同利益为先。|对聚餐、加班等组织的潜规则要求，可以拒绝。|国家有难时，即使要有个人牺牲，也应共同克服。|即使是家人，干涉我的婚姻、职业等决定时也应划清界线。|赡养父母、照顾家人不是个人选择，而是子女的本分。|只要本人负责，不良习惯或危险爱好就不该由国家来管。|为了安全，多少应接受更多的监控和执法。|用法律禁止只对本人有害的行为，是过度干涉。|酒驾、毒品等犯罪的处罚力度应比现在重得多。|规则越多，人们越不自己判断，只会照章办事。|与其事后追责，不如事前监管防患未然。|对于个人愿意自行承担的风险，国家不应一一阻拦。|新技术应在验证安全后才允许，而不是等发现风险后再禁止。|社会各处仍然存在女性面临的结构性不平等。|基于性别的制度性歧视已基本消失，剩下的是个人层面的问题。|性别差距较大时，配额等积极措施也是必要的。|基于性别的优待或配额，反而会制造新的不公平。|性犯罪和职场性别歧视应比现在得到更严格的处理。|不分性别对所有人适用同一标准，才是真正的平等。|薪资和晋升上的性别差距，仅靠个人选择无法解释。|兵役等义务应不分性别同等适用。".split("|"),
+ja:"既得権益が阻む改革は、反発が大きくても押し通すべきだ。|一気に大改革を進めて、かえって社会が悪化した例は多い。|「昔からそうだから」は、古い慣行を守る理由にならない。|急いで作った制度は後でより大きな代償になるので、ゆっくり検証しながら変えるべきだ。|問題が見えたら、完璧な代案が出る前でもまず変えてみるほうがよい。|長く続く制度には見えない理由があるかもしれず、変える前にまずその理由を確認すべきだ。|制度が不公平なら、変える過程で生じる混乱は受け入れるべきコストだ。|合意なく押し通した変化は、趣旨が良くても結局は反発を招くだけだ。|恵まれた家庭の出身者とそうでない人の差は、本人の努力だけでは越えにくくなった。|できる人がはるかに多く取るのは、不公平ではなく当然の報酬だ。|家庭の経済力で教育の質が分かれるのは不公平だ。|努力に応じた差を不平等と呼ぶなら、頑張る理由がなくなる。|相続や贈与で受け継がれる富には、今より重く課税すべきだ。|格差を縮めるために、できる人の取り分を削るのは逆差別だ。|同じ仕事でも所得格差が大きすぎるなら、社会が調整する必要がある。|競争のルールさえ公平なら、結果が大きく分かれても受け入れるべきだ。|富裕層と大企業は、今よりはるかに多く税を負担すべきだ。|福祉を増やせば、結局は働く人の負担が増えるだけだ。|医療・介護・住居は市場に任せず、国が責任を持つべきだ。|同じ金額なら、公共サービスより個人が直接使うほうが概ね効率的だ。|税負担が増えても、所得の高い人がより多く負担する仕組みが望ましい。|最低賃金を上げるより、雇用を増やすほうが弱い立場の人の助けになる。|不況のときほど、財政を出してでも弱い立場の人を守るべきだ。|公企業や規制を減らして民間に任せれば、サービスは良くなる。|結婚しない、子どもを持たないという選択も完全に尊重されるべきだ。|結婚・出産・家族を大切にする文化は、社会が積極的に守るべきだ。|同性カップルも、結婚した夫婦と同じ法的権利を持つべきだ。|子どもは父と母のいる家庭で育つのが最も望ましい。|伝統だからという理由だけで儀礼や慣習への参加を求めるのは望ましくない。|名節や法事のような伝統的な儀礼は、これからも続けていくべきだ。|多様な文化が混ざり合うと、社会はより豊かになる。|社会のアイデンティティを守るため、移民や外国人の流入は慎重に調整すべきだ。|会社や集団の空気より、自分の時間と人生が先だ。|組織が苦しいときは、個人も多少の損を一緒に引き受けるのが筋だ。|集団の決定が自分の考えと違うなら、従うより自分のやり方を貫くほうがよい。|個人の都合と共同の利益がぶつかるなら、概ね共同の利益が先だ。|飲み会や残業のような組織の暗黙の要求は、断ってよい。|国が困難なときは、個人の犠牲を伴っても共に乗り越えるのが筋だ。|家族でも、結婚や進路など私の決定に干渉するなら線を引くべきだ。|親の扶養や家族の世話は、個人の選択ではなく子の務めだ。|悪い習慣や危険な趣味も、本人が責任を負うなら国が止めることではない。|安全のためなら、監視や取り締まりが増えることもある程度は受け入れるべきだ。|本人にだけ害のある行動を法律で禁じるのは行き過ぎた干渉だ。|飲酒運転や薬物のような犯罪の処罰は、今よりはるかに重くすべきだ。|規制が増えるほど、人々は自分で判断せず言われたとおりにするだけになる。|事故後に責任を問うより、事前に防ぐ規制のほうがよい。|個人が自分で負うと決めたリスクまで、国が逐一止めるべきではない。|新技術は、リスクが確認されてから止めるのではなく、安全が検証されてから認めるべきだ。|社会のあちこちに、女性が直面する構造的な不平等が今も残っている。|性別を理由にした制度的な差別はほぼなくなり、残る問題は個人レベルのものだ。|性別の格差が大きいなら、クオータ制のような積極的措置も必要だ。|性別を基準にした優遇やクオータは、かえって新たな不公平を生む。|性犯罪や職場での性差別は、今よりも厳しく扱われるべきだ。|性別に関係なく全員に同じ基準を適用することが、本当の平等だ。|賃金や昇進の男女差は、個人の選択だけでは説明しにくい。|兵役のような義務は、性別に関係なく同じように適用されるべきだ。".split("|")};
+function T(){return lang==="ko"?{ui:KOUI,next:"다음",fin:"결과 보기",cl:CL}:TT[lang]}
+function AX(k){if(lang==="ko")return AXES[k];const x=AXT[lang][Object.keys(AXES).indexOf(k)];return{...AXES[k],name:x[0],left:x[1],right:x[2],sub:x[3]}}
+function qtext(q){return lang!=="ko"&&q.i!=null?QT[lang][q.i]:q.text}
+function setLang(l){lang=l;document.documentElement.lang=l;try{localStorage.setItem("site_lang",l)}catch(e){}
+const t=T();SEL.forEach((s,i)=>q_(...s).innerHTML=t.ui[i]);
+$("axgrid").innerHTML=Object.keys(AXES).map(k=>{const a=AX(k);return `<div class="axis" style="border-color:${a.col[0]}"><b>${a.name}</b><span>${a.sub}</span></div>`}).join("");
+if($("test").classList.contains("active")&&questions.length)renderQ();
+if($("result").classList.contains("active")&&window.lastScores)renderResult(window.lastScores)}
+window.addEventListener("load",()=>{let l="ko";try{l=localStorage.getItem("site_lang")||"ko"}catch(e){}if(l!=="ko"&&!TT[l])l="ko";$("lang").value=l;if(l!=="ko")setLang(l)});
+const KT=["자유로운 개척자","안정적인 수호자","성과형 혁신가","사회적 조정자","자율적 자유주의자","질서형 공동체주의자","실용적 경쟁주의자","진보적 평등주의자","현실적 보수주의자","독립적 성취가","연대형 협력가","균형형 현실주의자"];
+const TYT={
+en:[["Free Pioneer","You lean strongly toward opening new possibilities and moving in your own way."],["Steady Guardian","You value proven order and responsibility within relationships."],["Performance Innovator","You aren't afraid of change and value results and efficiency."],["Social Balancer","You care about balanced opportunity, safety nets and community responsibility."],["Autonomous Liberal","You broadly accept individual choice and diversity and prefer to judge for yourself."],["Order-minded Communitarian","You prioritize community stability, clear rules and familiar social standards."],["Pragmatic Competitor","You accept free choice and the results of competition fairly naturally."],["Progressive Egalitarian","You want to narrow social gaps and embrace new values and change."],["Realist Conservative","You favor proven rules and social stability with a practical eye."],["Independent Achiever","You value your own choices and responsibility for your results."],["Solidarity Collaborator","You value mutual responsibility and fair opportunity."],["Balanced Realist","Rather than leaning hard one way, you balance several values depending on the situation."]],
+zh:[["自由开拓者","你倾向于开拓新的可能，并按自己的方式行动。"],["稳健守护者","你重视经过检验的秩序和关系中的责任。"],["成果型创新者","你不惧变化，同时重视成果与效率。"],["社会协调者","你看重机会均衡、社会保障与共同体的责任。"],["自主自由主义者","你广泛认可个人选择与多样性，倾向于自己判断。"],["秩序型共同体主义者","你重视共同体的稳定、明确的规则和熟悉的社会标准。"],["务实竞争主义者","你较自然地接受自由选择与竞争的结果。"],["进步平等主义者","你希望缩小社会差距，积极接纳新价值与变化。"],["现实保守主义者","你以务实的眼光优先考虑经过检验的规则与社会稳定。"],["独立成就者","你重视自己的选择以及对成果的责任。"],["连带协作者","你重视人与人之间的责任和公平的机会。"],["均衡现实主义者","你不会极端偏向一方，而是依情境协调多种价值。"]],
+ja:[["自由な開拓者","新しい可能性を開き、自分のやり方で動く傾向が強いです。"],["安定の守護者","検証された秩序と、関係における責任を大切にします。"],["成果型イノベーター","変化を恐れず、成果と効率を重んじる傾向があります。"],["社会の調整者","機会の均衡、社会的安全網、共同体の責任を重く見ます。"],["自律的な自由主義者","個人の選択と多様性を広く認め、自分で判断しようとします。"],["秩序重視の共同体主義者","共同体の安定、明確な規則、慣れ親しんだ社会的基準を重んじます。"],["実用的な競争主義者","自由な選択と競争の結果を比較的自然に受け入れます。"],["進歩的な平等主義者","社会の格差を縮め、新しい価値や変化を積極的に受け入れます。"],["現実的な保守主義者","検証された規則と社会の安定を、現実的に優先します。"],["独立した成就者","自分の選択と成果への責任を大切にします。"],["連帯型の協力者","人と人との責任と公正な機会を大切にします。"],["バランス型の現実主義者","一方に偏らず、状況に応じて複数の価値を調整します。"]]};
+function tname(t){if(lang==="ko")return t;const i=KT.indexOf(t.title);return i<0?t:{title:TYT[lang][i][0],line:TYT[lang][i][1]}}
+const RST={en:[" Your answers lean toward the extremes."," Your answers lean toward the middle."," Your answers are evenly distributed."],zh:[" 你的作答偏向极端。"," 你的作答偏向中间。"," 你的作答分布较为均衡。"],ja:[" 回答は両極端に寄る傾向があります。"," 回答は中間に寄る傾向があります。"," 回答の分布はバランスが取れています。"]};
+function RS(){if(!window.rs)return "";if(lang==="ko")return ` 응답 분포는 ${window.rs}입니다.`;return RST[lang][["극단 응답이 많은 편","중간 응답이 많은 편","균형적인 응답 분포"].indexOf(window.rs)]}
+const MIDT={en:"Not strongly tilted on this axis; you move flexibly between both values depending on the issue.",zh:"在这条轴上没有明显倾向，会视议题灵活地在两种价值之间转换。",ja:"この軸では大きく偏っておらず、争点に応じて両方の価値を柔軟に行き来します。"};
+const DEEPT={
+en:{change:["You think what no longer fits should be changed. You spot problems early, but rapid change can outrun others' readiness; checking what might break first helps persuade.","You trust predictability and step-by-step improvement. You reduce risk and build consensus, but may react late when the old way already causes harm; set a point where waiting ends."],
+equal:["You believe competition is fair only if starting lines are close. You see blind spots in opportunity, but also weigh the motivating effect of unequal rewards.","You accept differences that follow effort and performance. You value motivation and responsibility, but keep an eye on how starting conditions shape results."],
+market:["You think society should share risks individuals can't control. You see the value of safety nets; checking funding and side effects makes the case stronger.","You trust freedom of choice and market efficiency. You energize innovation, but consider who can withstand risks the market doesn't cover."],
+tradition:["You are open to varied lifestyles and new cultures. Inclusion is your strength; also weigh the stability that proven customs give.","You find stability in proven norms and continuity. You protect trust and etiquette, but occasionally check who is left out as norms shift."],
+community:["Your independence stands out: you decide and take responsibility for important choices. Don't underrate what mutual help in relationships brings.","You put relationships and shared interest ahead of personal convenience. You build trust and cooperation, but protect your own limits to last long."],
+control:["You believe adults should be free to take risks they can bear. You value autonomy with responsibility; where harm spreads, minimal common rules may be needed.","You prioritize rules and prevention to avoid big harm. You excel at safety and predictability, but weigh the cost of fewer chances for individual judgment."],
+gender:["You see institutional action as needed to close structural gender gaps. You catch invisible inequality; check policy effects and fairness felt by other groups.","You see applying the same standard regardless of gender as equality. You are sensitive to choice and equity; also check for remaining gaps or structural factors."]},
+zh:{change:["你认为不再合适的事物就该改变。善于及早发现问题，但变化过快可能超出周围人的准备；先想想可能破坏什么会更有说服力。","你信任可预测性与渐进改善。擅长降低风险、积累共识，但旧做法已造成问题时可能反应偏慢；不妨设定“观望到何时为止”。"],
+equal:["你认为起跑线接近，竞争才公平。善于发现机会的盲区，也不妨考虑差别回报的激励作用。","你自然接受努力与表现带来的差异。重视动机与责任，也要留意起点条件如何影响结果。"],
+market:["你认为个人难以掌控的风险应由社会共担。看重保障网的价值；再考虑财源与副作用会更扎实。","你信任选择自由与市场效率。能激发创新，也请想想市场管不到的风险谁能承受。"],
+tradition:["你对多样的生活方式和新文化保持开放。包容是优势，也不妨看看经检验的习俗带来的稳定。","你从经检验的规范与连续性中获得安定。守护信任与礼仪，也偶尔看看规范变化中是否有人被落下。"],
+community:["你的独立性突出，重要选择自己决定并负责。别低估关系中互相帮助的价值。","你把关系与共同利益放在个人方便之前。善于建立信任与合作，也要守住自己的界限才能长久。"],
+control:["你认为成年人可以自由承担自己扛得住的风险。重视以责任为前提的自主；在危害会扩散的领域，也可能需要最低限度的共同规则。","你优先考虑规则与预防以避免重大伤害。擅长安全与可预测性，也要考虑个人判断与尝试机会减少的代价。"],
+gender:["你认为要消除结构性的性别差距需要制度介入。善于发现看不见的不平等，也可检视政策实效与其他群体感受到的公平。","你认为不分性别适用同一标准才是平等。对个人选择与公平敏感，也可留意仍存在的差距或结构性因素。"]},
+ja:{change:["合わなくなったものは変えるべきだと考えます。問題の早期発見に強い反面、変化が周囲の準備を追い越すこともあります。壊れるものを先に確認すると説得力が増します。","予測可能性と段階的な改善を信頼します。リスクを減らし合意を築くのに強い反面、古い方法が既に害を生んでいるときは対応が遅れがちです。待つ期限を決めると均衡が取れます。"],
+equal:["出発線が近くてこそ競争も公平だと考えます。機会の死角に気づく一方、差のある報酬の動機づけ効果も考えてみてください。","努力や成果による差を自然に受け入れます。動機と責任を重んじる一方、出発条件が結果に与える影響にも目を向けましょう。"],
+market:["個人では制御しにくいリスクは社会で分かち合うべきだと考えます。安全網の価値に敏感で、財源や副作用も見ると一層強くなります。","選択の自由と市場の効率を信頼します。革新を活かす一方、市場が拾えないリスクに誰が耐えられるかも考えてみてください。"],
+tradition:["多様な生き方や新しい文化に開かれています。包容力が強みで、検証された慣習がもたらす安定も併せて見ると広がります。","検証された規範と連続性に安心を得ます。信頼や礼儀を守る一方、規範が変わる中で取り残される人がいないかも時々振り返りましょう。"],
+community:["重要な選択は自分で決めて責任を負う独立性が際立ちます。関係の中で助け合うことの価値を軽く見ないことが大切です。","関係や共同の利益を個人の都合より前に置きます。信頼と協力を築くのに強い反面、自分の限界も守ってこそ長続きします。"],
+control:["成人が自分で負えるリスクは自由に選べるべきだと考えます。責任を前提にした自律を重んじますが、害が広がる領域では最小限の共通ルールが要る場合もあります。","大きな被害を防ぐため、規則と予防を優先します。安全と予測可能性に強い反面、個人の判断や試みの機会が減るコストも考えましょう。"],
+gender:["性別による構造的な格差を解くには制度的な介入が必要だと考えます。見えない不平等を捉えるのに強く、政策の実効性や他の集団が感じる公正さも点検すると説得力が増します。","性別に関係なく同じ基準を適用することが平等だと考えます。個人の選択と公平性に敏感で、残る格差や構造的要因がないかも見ておくと均衡が取れます。"]}};
+function LS(a,v,on){const d=Math.abs(v-50);return d===0?"color:#c4cad4;font-size:14px":on?`color:${a.col[1]};font-weight:900;font-size:18px;text-shadow:0 0 12px ${a.col[0]}66`:"color:#667184;font-size:12px"}
+function tx(v){return v<50?"#ff7a86":"#7fb0ff"}
+const HL={"ko":{"econ":["서민과 약자를 보호하는 안전망과 분배를 중시합니다.","시장의 자유와 성과에 따른 보상을 중시합니다."],"social":["새로운 변화와 다양성에 열려 있습니다.","검증된 질서와 전통의 연속성을 중시합니다."],"liberty":["개인의 선택과 자유를 우선합니다.","공동체의 질서와 규칙, 책임을 우선합니다."],"gender":["성별 격차 해소를 위한 적극적 조치에 공감합니다.","성별과 무관한 동일한 기준을 평등으로 봅니다."]},"en":{"econ":["You value safety nets and redistribution that protect ordinary and vulnerable people.","You value market freedom and rewards that follow performance."],"social":["You are open to change and diversity.","You value proven order and continuity of tradition."],"liberty":["You put individual choice and freedom first.","You put community order, rules and responsibility first."],"gender":["You support active measures to close gender gaps.","You see applying the same standard regardless of gender as equality."]},"zh":{"econ":["你看重保护普通人与弱势群体的保障网和分配。","你看重市场自由和按绩效获得回报。"],"social":["你对变化与多样性持开放态度。","你看重经过检验的秩序和传统的延续。"],"liberty":["你优先考虑个人选择与自由。","你优先考虑共同体的秩序、规则和责任。"],"gender":["你赞同为缩小性别差距采取积极措施。","你认为不分性别适用同一标准才是平等。"]},"ja":{"econ":["庶民や弱者を守る安全網と分配を重んじます。","市場の自由と成果に応じた報酬を重んじます。"],"social":["変化と多様性に開かれています。","検証された秩序と伝統の連続性を重んじます。"],"liberty":["個人の選択と自由を優先します。","共同体の秩序・規則・責任を優先します。"],"gender":["男女格差を縮める積極的な措置に共感します。","性別に関係ない同一の基準を平等と考えます。"]}};
+const HLB={ko:"한쪽으로 크게 기울지 않은 균형형입니다.",en:"You are balanced and not strongly tilted either way.",zh:"你较为均衡，没有明显偏向某一方。",ja:"どちらにも大きく偏らない均衡型です。"};
+const NL={econ:"N",social:"U",liberty:"S",gender:"Y"};
+function codeCh(k,v,L){return L5(v)?L[k][v>50?1:0]:NL[k]}
+function reading(c){if(lang!=="ko")return c[0]+c.slice(1).toLowerCase();const I={B:7,M:6,L:5,D:3,N:2,S:9},V={I:20,O:8,U:13,A:0,E:5,Y:18};let o="";for(let i=0;i<4;i+=2)o+=String.fromCharCode(0xAC00+(I[c[i]]*21+V[c[i+1]])*28);return o}
+const mg=(D,a,b)=>[D[a][0]+" "+D[b][0],D[a][1]+" "+D[b][1]];
+function mDeep(D){return{econ:mg(D,"equal","market"),social:mg(D,"change","tradition"),liberty:mg(D,"community","control"),gender:D.gender}}
+const DEEP2=mDeep(DEEP),DEEPT2={en:mDeep(DEEPT.en),zh:mDeep(DEEPT.zh),ja:mDeep(DEEPT.ja)};
+function cl(v){const l=L5(v);return l===0?"#cfd3d8":(v<50?["#f4a3a3","#d6404f","#8f0f22"]:["#a3c4f4","#3d79d6","#143f96"])[l-1]}
+function L5(v){const d=Math.abs(v-50);return d<8?0:d<22?1:d<36?2:3}
+function renderArt(n,L){const ks=Object.keys(AXES),H=72,Y=10,E=Y+4*H;let g="";const dk="#0003";
+ks.forEach((k,i)=>{const v=n[k],lv=L5(v),y=Y+i*H,a=AX(k);let m="";
+if(i==0){for(let t=1;t<12;t++){const an=Math.PI*t/12;m+=`<line x1="120" y1="${y+H}" x2="${120+Math.cos(an)*110}" y2="${y+H-Math.sin(an)*110}" stroke="#0004"/>`}}
+else if(i==1)m=`<polygon points="20,${y+H} 220,${y} 220,${y+H}" fill="${dk}"/>`;
+else if(i==2)m=`<polygon points="120,${y+H} 120,${y+46} 150,${y+46} 150,${y+24} 190,${y+24} 190,${y} 220,${y} 220,${y+H}" fill="${dk}"/>`;
+else m=`<circle cx="62" cy="${y+H/2}" r="22" fill="${dk}"/>`;
+g+=`<rect x="0" y="${y}" width="240" height="${H}" fill="${cl(v)}"/>${m}<text x="120" y="${y+H/2+6}" text-anchor="middle" font-size="38" font-weight="900" fill="${lv?"#fff":"#8a929e"}">${codeCh(k,v,L)}</text><text x="120" y="${y+H/2+26}" text-anchor="middle" font-size="12" fill="${lv?"#ffffffd9":"#8a929e"}">${lv?(v>50?a.right:a.left)+" "+lv:"—"}</text>`});
+$("resultArt").innerHTML=`<svg viewBox="0 0 240 ${E+10}" style="width:min(70%,260px)"><defs><clipPath id="arch"><path d="M20 ${E} V110 A100 100 0 0 1 220 110 V${E} Z"/></clipPath></defs><g clip-path="url(#arch)">${g}</g></svg>`}
+const NK={"ko":["자유로운 개혁가","보편적 자유주의자","질서 있는 개혁가","원칙형 사회민주주의자","전통 속 평등주의자","소박한 자유인","따뜻한 수호자","든든한 파수꾼","혁신 개척자","실용적 자유인","효율적 개혁가","합리적 설계자","독립적 현실가","고전적 자유주의자","신중한 관리자","전통적 질서주의자"],"en":["Free Reformer","Universal Liberal","Orderly Reformer","Principled Social Democrat","Traditional Egalitarian","Humble Free Spirit","Caring Guardian","Steady Sentinel","Innovation Pioneer","Pragmatic Free Agent","Efficient Reformer","Rational Architect","Independent Realist","Classical Liberal","Prudent Steward","Traditional Orderist"],"zh":["自由改革者","普遍自由主义者","有序改革者","原则型社会民主派","传统平等派","质朴自由人","温情守护者","可靠守望者","创新开拓者","务实自由人","高效改革者","理性设计者","独立现实派","古典自由主义者","审慎管理者","传统秩序派"],"ja":["自由な改革者","普遍的リベラル","秩序ある改革者","原則重視の社民派","伝統の中の平等派","素朴な自由人","温かな守護者","頼れる番人","革新の開拓者","実用的な自由人","効率的な改革者","合理的な設計者","自立した現実派","古典的自由主義者","慎重な管理者","伝統的秩序派"]};
+function nick(n){const i=(n.econ>50?8:0)+(n.social>50?4:0)+(n.liberty>50?2:0)+(n.gender>50?1:0);return NK[lang][i]}
+document.getElementById("choices").addEventListener("click",e=>{const lab=e.target.closest&&e.target.closest(".choice");if(!lab)return;e.preventDefault();const inp=lab.querySelector("input");answers[idx]=+inp.value;persist();
+document.querySelectorAll("#choices input").forEach(x=>x.checked=(x===inp));
+if(idx<55&&!window.advLock){window.advLock=true;setTimeout(()=>{window.advLock=false;if(idx<55){idx++;persist();renderQ()}},100)}});
+const SAVE={ko:"이미지를 길게 눌러 저장하세요",en:"Press and hold the image to save",zh:"长按图片保存",ja:"画像を長押しして保存"},SHT={ko:"공유",en:"Share",zh:"分享",ja:"共有"};
+function wrapT(c,t,x,y,w,lh){let l="";for(const ch of t){if(c.measureText(l+ch).width>w){c.fillText(l,x,y);l=ch;y+=lh}else l+=ch}c.fillText(l,x,y)}
+function cardImg(){const n=window.lastScores,ks=Object.keys(AXES),LL={econ:["B","M"],social:["I","O"],liberty:["L","D"],gender:["A","E"]};
+const W=1080,cv=document.createElement("canvas");cv.width=W;cv.height=1350;const c=cv.getContext("2d");
+c.fillStyle="#0b0d12";c.fillRect(0,0,W,1350);c.textAlign="left";c.fillStyle="#9ca6b5";c.font="700 26px sans-serif";c.fillText("PRISM 56",72,100);
+c.textAlign="center";c.font="900 190px sans-serif";
+ks.forEach((k,i)=>{const v=n[k];c.fillStyle=Math.abs(v-50)<8?"#667184":tx(v);c.fillText(codeCh(k,v,LL),W/2+(i-1.5)*170,300)});
+c.fillStyle="#f3f5f7";c.font="800 54px sans-serif";c.fillText($("typeName").textContent+"  ·  "+$("nick").textContent,W/2,392);
+const ax=W/2-190,ay=450,aw=380,bh=100;
+c.save();c.beginPath();c.moveTo(ax,ay+4*bh);c.lineTo(ax,ay+190);c.arc(W/2,ay+190,190,Math.PI,0);c.lineTo(ax+aw,ay+4*bh);c.closePath();c.clip();
+ks.forEach((k,i)=>{const v=n[k],y=ay+i*bh;c.fillStyle=cl(v);c.fillRect(ax,y,aw,bh);c.fillStyle="rgba(0,0,0,.2)";c.strokeStyle="rgba(0,0,0,.25)";
+if(i==0){for(let t=1;t<12;t++){const a=Math.PI*t/12;c.beginPath();c.moveTo(W/2,y+bh);c.lineTo(W/2+Math.cos(a)*200,y+bh-Math.sin(a)*200);c.stroke()}}
+else if(i==1){c.beginPath();c.moveTo(ax,y+bh);c.lineTo(ax+aw,y);c.lineTo(ax+aw,y+bh);c.fill()}
+else if(i==2){c.fillRect(W/2,y+66,190,34);c.fillRect(W/2+60,y+33,130,33);c.fillRect(W/2+120,y,70,33)}
+else{c.beginPath();c.arc(ax+95,y+bh/2,32,0,7);c.fill()}
+c.fillStyle=L5(v)?"#fff":"#8a929e";c.font="900 54px sans-serif";c.fillText(codeCh(k,v,LL),W/2,y+bh/2+18)});
+c.restore();c.fillStyle="#aeb7c4";c.font="400 30px sans-serif";wrapT(c,$("summary").textContent,W/2,940,900,44);
+ks.forEach((k,i)=>{const a=AX(k),v=n[k],lv=L5(v);c.fillStyle=lv?tx(v):"#8a929e";c.font="700 32px sans-serif";c.fillText(codeCh(k,v,LL)+"  "+(lv?(v>50?a.right:a.left)+"  "+lv+"/3":a.left+" / "+a.right),W/2,1120+i*48)});
+c.fillStyle="#596474";c.font="500 22px sans-serif";c.fillText("PRISM 56",W/2,1320);return cv}
+function downloadShareCard(){const cv=cardImg(),url=cv.toDataURL("image/png"),o=document.createElement("div");
+o.style.cssText="position:fixed;inset:0;z-index:99;background:#000d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px";
+o.innerHTML=`<img src="${url}" style="max-width:100%;max-height:76vh;border-radius:14px"><div style="color:#c4cad4;font-size:13px">${SAVE[lang]}</div><div style="display:flex;gap:10px"><button class="btn primary" id="cs">${SHT[lang]}</button><button class="btn ghost" id="cx">✕</button></div>`;
+document.body.appendChild(o);o.querySelector("#cx").onclick=()=>o.remove();
+o.querySelector("#cs").onclick=()=>cv.toBlob(b=>{const f=new File([b],"prism56.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],text:shareText()}).catch(()=>{});else{const a=document.createElement("a");a.href=url;a.download="prism56.png";a.click()}})}
+window.addEventListener("load",restore);
+
+/* ===== 공통 사이트 규격(다른 테스트와 동일) ===== */
+const KAKAO_KEY=(window.SITE||{}).KAKAO_KEY||"",SHARE_BASE="",HUB_URL=(window.SITE||{}).HUB_URL||"";
+const XT={ko:{sb:"친구가 공유한 PRISM 56 결과예요. 나는 어떤 모양일까요?",sbtn:"나도 해보기",other:"다른 테스트도 해보기",hubwait:"메인 페이지 준비 중이에요",copied:"링크 복사됨",pick:"응답을 하나 선택해주세요."},en:{sb:"A friend shared their PRISM 56 result. What shape are you?",sbtn:"Try it myself",other:"Try other tests",hubwait:"Main page coming soon",copied:"Link copied",pick:"Please choose an answer."},zh:{sb:"这是朋友分享的PRISM 56结果，你是什么样？",sbtn:"我也来试试",other:"也试试其他测试",hubwait:"主页准备中",copied:"链接已复制",pick:"请选择一个答案。"},ja:{sb:"友だちが共有したPRISM 56の結果です。あなたはどんな形？",sbtn:"わたしもやってみる",other:"ほかのテストも見る",hubwait:"メインページ準備中",copied:"リンクをコピーしました",pick:"回答を選んでください。"}};
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+function applyX(){document.querySelectorAll("[data-x]").forEach(e=>e.innerHTML=XT[lang][e.dataset.x])}
+const _setLang=setLang;setLang=function(l){_setLang(l);applyX()};
+const PK=["econ","social","liberty","gender"];
+function shareUrl(){const n=window.lastScores;return(SHARE_BASE||location.href.split("#")[0])+"#r="+PK.map(k=>n[k]).join(".")+"&l="+lang}
+function copyLink(){const x=shareText()+"\n"+shareUrl();(navigator.clipboard?navigator.clipboard.writeText(x):Promise.reject()).then(()=>toast(XT[lang].copied)).catch(()=>toast(shareUrl()))}
+function copyResult(){copyLink()}
+function nativeShare(){const txt=shareText(),url=shareUrl();if(navigator.share)navigator.share({title:"PRISM 56",text:txt,url}).catch(()=>{});else copyLink()}
+function kakaoShare(){if(!KAKAO_KEY)return nativeShare();const txt=shareText(),url=shareUrl(),go=()=>{try{if(!Kakao.isInitialized())Kakao.init(KAKAO_KEY);Kakao.Share.sendDefault({objectType:"text",text:txt,link:{mobileWebUrl:url,webUrl:url}})}catch(e){nativeShare()}};
+if(window.Kakao)go();else{const sc=document.createElement("script");sc.src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js";sc.onload=go;sc.onerror=nativeShare;document.head.appendChild(sc)}}
+function share(p){const url=shareUrl(),txt=shareText(),e=encodeURIComponent;if(p==="line")return window.open(`https://social-plugins.line.me/lineit/share?url=${e(url)}&text=${e(txt)}`,"_blank");if(p==="wa")return window.open(`https://wa.me/?text=${e(txt+"\n"+url)}`,"_blank");if(p==="kakao")return kakaoShare();nativeShare()}
+function goHub(){HUB_URL?location.href=HUB_URL:toast(XT[lang].hubwait)}
+function leaveShared(){try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}restart()}
+function restart(){$("sbanner").style.display="none";document.querySelectorAll(".own").forEach(x=>x.style.display="");try{localStorage.removeItem("prism48_progress8")}catch(e){}show("intro");$("timer").textContent="00:00"}
+window.addEventListener("load",()=>{applyX();const h=new URLSearchParams(location.hash.slice(1)),r=(h.get("r")||"").split(".").map(Number);
+if(r.length===4&&r.every(x=>Number.isFinite(x)&&x>=0&&x<=100)){const l=XT[h.get("l")]?h.get("l"):lang;$("lang").value=l;setLang(l);const n={};PK.forEach((k,i)=>n[k]=Math.round(r[i]));window.rs=null;renderResult(n);$("sbanner").style.display="block";document.querySelectorAll(".own").forEach(x=>x.style.display="none");show("result")}});
+</script></body></html>
