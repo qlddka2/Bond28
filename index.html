@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TEST LAB — 나를 알아보는 다섯 가지 테스트</title>
+
+<meta property="og:type" content="website"><meta property="og:title" content="TEST LAB — 나를 알아보는 다섯 가지 테스트"><meta property="og:description" content="반응속도 챌린지부터 가치관·애착·육아·사고 강점까지. 결과는 서버에 저장되지 않아요.">
+<style>
+:root{--line:#252d44;--text:#eef1f8;--muted:#8f9bb3}
+*{box-sizing:border-box}html,body{margin:0;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;background:radial-gradient(circle at 8% -6%,#1b2f55 0,transparent 44%),radial-gradient(circle at 100% 4%,#3a2260 0,transparent 40%),#0a0e1a}
+.wrap{max-width:860px;margin:auto;padding:calc(22px + env(safe-area-inset-top)) 18px calc(60px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center}.logo{font-weight:800;letter-spacing:.14em;font-size:13px}
+select{background:#131a2c;color:#dfe6f5;border:1px solid var(--line);border-radius:10px;padding:5px 8px;font-size:12px}
+.hero{padding:44px 2px 22px}.eyebrow{color:#7fe3d0;font-weight:700;font-size:12px;letter-spacing:.18em}
+h1{font-family:"Noto Serif KR","Nanum Myeongjo",Georgia,serif;font-size:clamp(34px,9vw,58px);line-height:1.15;letter-spacing:-.04em;margin:14px 0 18px;font-weight:700}h1 em{font-style:normal;background:linear-gradient(90deg,#7fe3d0,#b6a2ff,#f5b042);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#b9c3d9;line-height:1.75;margin:0;max-width:600px}
+a.card{display:block;text-decoration:none;color:inherit;position:relative;background:rgba(17,23,40,.92);border:1px solid var(--line);border-radius:22px;padding:22px;overflow:hidden;transition:transform .18s,border-color .18s}
+a.card:hover{transform:translateY(-3px);border-color:var(--c)}a.card:active{transform:scale(.99)}
+a.card::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:var(--c)}a.card::after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:var(--c);opacity:.12}
+.ic{font-size:34px}.nm{font-size:20px;font-weight:800;margin:10px 0 4px;letter-spacing:-.01em}.tag{font-size:14px;color:#c4cde0;line-height:1.55;margin:0 0 14px;min-height:44px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{font-size:11.5px;border:1px solid var(--line);border-radius:99px;padding:4px 10px;color:#aeb9d0}.chip.go{margin-left:auto;border-color:var(--c);color:var(--c);font-weight:800}
+.feat{margin-bottom:14px;background:linear-gradient(120deg,rgba(255,122,89,.16),rgba(17,23,40,.92) 60%)}.feat .tag{min-height:0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.note{margin-top:30px;color:#76829b;font-size:12px;line-height:1.75;text-align:center}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.tag{min-height:0}}
+</style><!--SEO-HEAD-START--><meta name="description" content="TEST LAB — 가치관·애착·육아·사고 강점을 5~12분이면 살펴보는 무료 심리·성향 테스트 모음. 회원가입 없음, 결과는 서버에 저장되지 않아요."><link rel="stylesheet" href="./seo.css"><!--SEO-HEAD-END--><!--OG-START--><meta property="og:url" content="https://qlddka2.github.io/Bond28/"><meta property="og:image" content="https://qlddka2.github.io/Bond28/og/hub.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://qlddka2.github.io/Bond28/og/hub.jpg"><!--OG-END--></head><body><div class="wrap">
+<div class="top"><div class="logo">TEST LAB</div><select id="lang" onchange="setLang(this.value)"><option value="ko">한국어</option><option value="en">English</option><option value="zh">中文</option><option value="ja">日本語</option></select></div>
+<div class="hero"><div class="eyebrow" data-k="eb"></div><h1 data-k="h1"></h1><p data-k="p"></p></div>
+<div id="list"></div>
+<p class="note" data-k="note"></p><!--SEO-ART-START--><section class="seo" aria-label="테스트 안내"><h2>TEST LAB 소개</h2>
+<p>TEST LAB은 가치관, 애착, 육아 스타일, 사고 강점까지 <b>5~12분이면 끝나는 가벼운 자기이해 테스트</b>를 모아 둔 무료 사이트입니다. 회원가입이 없고, 응답과 결과는 서버에 저장되지 않습니다. 정답이나 진단 대신, 나를 이해하는 하나의 참고 자료를 만드는 것을 목표로 합니다.</p>
+<h3>테스트 목록</h3>
+<ul>
+<li><a href="./react/"><b>반응속도 챌린지</b></a> — 공이 나타나면 바로 터치. 3판 평균으로 티어가 정해지는 약 1분짜리 미니게임</li>
+<li><a href="./prism/"><b>PRISM 56 가치관 지도</b></a> — 복지↔시장, 진보↔보수 등 4개 축으로 보는 가치관 유형 (56문항)</li>
+<li><a href="./bond/"><b>BOND 28 애착 스타일</b></a> — 불안과 거리두기 두 축으로 보는 관계 속 나의 경향 (28문항)</li>
+<li><a href="./nest/"><b>NEST 24 육아 스타일</b></a> — 마음 표현·기준·개입 세 축으로 보는 8가지 육아 유형 (24문항)</li>
+<li><a href="./mind/"><b>MIND 5 사고 강점 지도</b></a> — 언어·시공간·추론·기억·속도 5개 영역의 강점 모양 (32문항+스피드 라운드, IQ 아님)</li>
+</ul>
+<h3>이 사이트의 원칙</h3>
+<ul>
+<li><b>비진단·비임상</b>: 모든 결과는 유형명, 닉네임, 캐릭터로 표현하며 의학적·심리학적 진단이 아닙니다.</li>
+<li><b>서버에 저장하지 않음</b>: 응답은 내 기기 안에서 계산되고, 결과는 공유 링크에만 담깁니다.</li>
+<li><b>4개 언어</b>: 한국어, English, 中文, 日本語로 이용할 수 있습니다.</li>
+</ul>
+<h3>자주 묻는 질문</h3>
+<p class="q">Q. 결과가 얼마나 정확한가요?</p><p>재미와 자기이해를 위한 참고 자료로, 전문 검사의 정확도를 보장하지 않습니다. 컨디션이나 시기에 따라 결과가 달라질 수 있어요.</p>
+<p class="q">Q. 친구와 결과를 공유할 수 있나요?</p><p>네. 결과 화면의 공유 버튼으로 링크나 이미지를 보낼 수 있고, 링크를 받은 친구는 같은 결과 화면과 ‘나도 해보기’ 버튼을 보게 됩니다.</p>
+<p class="q">Q. 문의나 오류 제보는 어디로 하나요?</p><p><a href="./contact/">문의 페이지</a>를 확인해 주세요.</p></section><!--SEO-ART-END-->
+<!--SEO-FOOT-START--><nav class="sfoot" aria-label="사이트 정보"><a href="./about/">소개</a>·<a href="./privacy/">개인정보처리방침</a>·<a href="./terms/">이용약관</a>·<a href="./contact/">문의</a><br>© 2026 TEST LAB · 모든 테스트는 오락·자기이해용이며 진단이 아닙니다.</nav><!--SEO-FOOT-END--></div>
+<script src="./config.js"></script><!--TL-JS-START--><script src="./track.js"></script><!--TL-JS-END-->
+<script>
+const TESTS=[
+{id:"react",href:"./react/",ic:"⚡",c:"#ff7a59",feat:1,n:"REACT",min:1},
+{id:"prism",href:"./prism/",ic:"🔮",c:"#b6a2ff",n:"PRISM 56",min:10},
+{id:"bond",href:"./bond/",ic:"🪢",c:"#f0b46c",n:"BOND 28",min:6},
+{id:"nest",href:"./nest/",ic:"🪺",c:"#8fd0a8",n:"NEST 24",min:7},
+{id:"mind",href:"./mind/",ic:"🧠",c:"#2dd4bf",n:"MIND 5",min:12}];
+const UI={
+ko:{eb:"5 SHORT TESTS",h1:"나를 알아보는<br><em>다섯 가지 테스트</em>",p:"반응속도 한 판으로 몸을 풀고, 가치관·애착·육아·사고 강점까지. 정답이나 진단이 아니라 나를 이해하는 가벼운 참고 자료예요.",note:"모든 테스트는 재미와 자기이해를 위한 비임상 도구이며 의학적·심리학적 진단이 아닙니다.<br>결과는 서버로 전송하거나 저장하지 않고, 공유 링크에만 담깁니다.",go:"시작",m:"분",
+ t:{react:["반응속도 챌린지","공이 뜨면 바로 누르세요. 3판 평균으로 티어가 정해져요.","3판"],prism:["가치관 지도","복지↔시장, 진보↔보수 등 4개 축으로 보는 나의 가치관 유형.","56문항"],bond:["관계 속 애착 스타일","연애·친밀한 관계에서 나타나는 나의 애착 패턴.","28문항"],nest:["나의 육아 스타일","육아 장면 속 선택으로 보는 마음 표현·기준·개입 스타일.","24문항"],mind:["내 머릿속 강점 지도","점수 대신 5가지 사고 영역의 ‘강점 모양’으로 보는 비공식 퀴즈.","32문항+스피드"]}},
+en:{eb:"5 SHORT TESTS",h1:"Five tests to<br><em>get to know yourself</em>",p:"Warm up with a reaction round, then explore your values, attachment, parenting and thinking strengths. Not answers or diagnoses, just light references for understanding yourself.",note:"All tests are non-clinical tools for fun and self-understanding, not medical or psychological diagnoses.<br>Results are never sent or stored on a server; they live only in share links.",go:"Start",m:" min",
+ t:{react:["Reaction Challenge","Tap as soon as the ball appears. Your tier comes from a 3-round average.","3 rounds"],prism:["Values Map","Your values type across four axes, like welfare↔market and progressive↔conservative.","56 Qs"],bond:["Attachment Style","Your attachment pattern in romantic and close relationships.","28 Qs"],nest:["Parenting Style","How you show feeling, set standards and get involved in parenting moments.","24 Qs"],mind:["Strength Map","An unofficial quiz showing the shape of your strengths across 5 thinking areas, not a score.","32 Qs + speed"]}},
+zh:{eb:"5 SHORT TESTS",h1:"认识自己的<br><em>五个测试</em>",p:"先用一局反应速度热身，再探索价值观、依恋、育儿与思维优势。不是标准答案或诊断，只是帮助你了解自己的轻量参考。",note:"所有测试均为娱乐与自我了解的非临床工具，不构成医学或心理学诊断。<br>结果不会上传或保存到服务器，只存在于分享链接中。",go:"开始",m:"分钟",
+ t:{react:["反应速度挑战","球一出现就点击。三局平均决定段位。","3局"],prism:["价值观地图","从福利↔市场、进步↔保守等四条轴看你的价值观类型。","56题"],bond:["依恋风格","你在亲密关系中表现出的依恋模式。","28题"],nest:["育儿风格","从育儿场景中的选择看情感表达、标准与介入方式。","24题"],mind:["大脑优势地图","不给分数，用五个思维领域的“优势形状”呈现的非正式测验。","32题+速度挑战"]}},
+ja:{eb:"5 SHORT TESTS",h1:"自分を知る<br><em>5つのテスト</em>",p:"反応速度で肩慣らしをして、価値観・愛着・子育て・思考の強みへ。正解や診断ではなく、自分を理解するための軽い参考です。",note:"すべてのテストは楽しみと自己理解のための非臨床ツールで、医学的・心理学的な診断ではありません。<br>結果はサーバーに送信・保存されず、共有リンクにのみ含まれます。",go:"はじめる",m:"分",
+ t:{react:["反応速度チャレンジ","ボールが出たらすぐタップ。3回の平均でティアが決まります。","3回"],prism:["価値観マップ","福祉↔市場、進歩↔保守など4軸で見る価値観タイプ。","56問"],bond:["愛着スタイル","恋愛や親密な関係で現れる愛着パターン。","28問"],nest:["子育てスタイル","子育ての場面での選択から見る気持ちの表現・基準・関わり方。","24問"],mind:["強みマップ","点数ではなく5つの思考領域の「強みの形」で見る非公式クイズ。","32問+スピード"]}}};
+let lang="ko";
+function render(){const u=UI[lang];document.getElementById("list").innerHTML=(()=>{const card=t=>{const d=u.t[t.id];return `<a class="card ${t.feat?"feat":""}" href="${t.href}" style="--c:${t.c}"><div class="ic">${t.ic}</div><div class="nm">${d[0]}</div><p class="tag">${d[1]}</p><div class="chips"><span class="chip">${t.n}</span><span class="chip">${d[2]}</span><span class="chip">${({ko:"약 ",en:"~",zh:"约",ja:"約"})[lang]+t.min+u.m}</span><span class="chip go">${u.go} →</span></div></a>`};
+ const f=TESTS.filter(t=>t.feat).map(card).join(""),g=TESTS.filter(t=>!t.feat).map(card).join("");return f+`<div class="grid">${g}</div>`})()}
+function setLang(l){lang=l;document.documentElement.lang=l;try{localStorage.setItem("site_lang",l)}catch(e){}document.querySelectorAll("[data-k]").forEach(e=>e.innerHTML=UI[l][e.dataset.k]);render()}
+window.addEventListener("load",()=>{let l="";try{l=localStorage.getItem("site_lang")||""}catch(e){}
+ if(!UI[l]){const n=(navigator.language||"ko").slice(0,2);l=UI[n]?n:"ko"}document.getElementById("lang").value=l;setLang(l)});
+</script></body></html>

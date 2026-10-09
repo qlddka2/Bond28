@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MIND 5 — 내 머릿속 강점 지도</title>
+<meta property="og:type" content="website"><meta property="og:title" content="MIND 5 — 나는 어느 쪽 머리가 발달했을까?"><meta property="og:description" content="점수 대신 ‘강점의 모양’으로 보는 5가지 사고 영역 퀴즈 (공식 IQ 검사 아님)">
+<style>
+:root{--line:#273049;--text:#eef2fb;--muted:#93a0b8;--a:#2dd4bf;--b:#a78bfa}
+*{box-sizing:border-box}html,body{margin:0;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;background:radial-gradient(circle at 10% -8%,#16345a 0,transparent 46%),radial-gradient(circle at 98% 8%,#34205a 0,transparent 42%),#0a0f1d}
+body{min-height:100vh}.wrap{max-width:760px;margin:auto;padding:calc(22px + env(safe-area-inset-top)) 18px calc(70px + env(safe-area-inset-bottom))}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.logo{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.12em;font-size:13px}.timer{color:var(--muted);font-size:13px}
+select{background:#141c30;color:#dfe6f5;border:1px solid var(--line);border-radius:10px;padding:5px 8px;font-size:12px}
+.screen{display:none}.screen.active{display:block}.serif{font-family:"Noto Serif KR","Nanum Myeongjo",Georgia,serif}
+.hero{padding:38px 4px 14px}.eyebrow{color:var(--a);font-weight:700;font-size:12px;letter-spacing:.16em}
+.hero h1{font-size:clamp(34px,9.5vw,58px);line-height:1.14;margin:14px 0 20px;letter-spacing:-.04em;font-weight:700}.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#bcc7da;line-height:1.75;margin:0}
+.card,.pc{background:rgba(17,24,41,.93);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:16px}
+.axis-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}.axis{background:#151e33;border-radius:14px;padding:11px 8px;border-top:4px solid;text-align:center}.axis i{display:block;font-style:normal;font-size:22px;margin-bottom:4px}.axis b{display:block;font-size:12.5px;margin-bottom:3px}.axis span{color:var(--muted);font-size:10.5px;line-height:1.35;display:block}
+.btn{border:0;border-radius:14px;padding:14px 18px;background:var(--text);color:#0a0f1d;font-weight:800;font-size:15px;cursor:pointer}.btn.primary{background:linear-gradient(90deg,#2dd4bf,#a78bfa);color:#0a0f1d}.btn.ghost{background:#151e33;color:#dfe6f5;border:1px solid var(--line)}.btn:disabled{opacity:.4}
+.actions{display:flex;gap:10px;margin-top:20px}.actions .btn{flex:1}.pg{height:5px;background:#1d2740;border-radius:99px;overflow:hidden;margin:8px 0 20px}.pg i{display:block;height:100%;background:linear-gradient(90deg,var(--a),var(--b));width:0}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.qnum{font-size:12px;font-weight:800;letter-spacing:.12em}
+.question{font-size:clamp(19px,5.2vw,26px);line-height:1.45;letter-spacing:-.02em;margin:14px 0 20px;min-height:60px}.question svg{display:block;margin:6px auto 0;max-width:100%}
+.choices{display:grid;gap:9px}.choices.vis{grid-template-columns:1fr 1fr}.choice{position:relative}.choice input{position:absolute;opacity:0}
+.choice label{-webkit-tap-highlight-color:transparent;min-height:46px;display:flex;align-items:center;justify-content:center;border:1px solid #2a3652;background:#141c30;border-radius:15px;padding:11px 16px;cursor:pointer;text-align:center}
+.choices:not(.vis) .choice label{justify-content:flex-start;text-align:left}.choices.vis .choice label{padding:8px}.choices.vis svg{width:100%;max-width:150px;height:auto}
+.choice input:checked+label{border-color:var(--a);background:#10262d;box-shadow:0 0 0 1px var(--a) inset}.mono{font-variant-numeric:tabular-nums;letter-spacing:.08em;font-weight:700}
+.big{font-size:clamp(30px,10vw,48px);text-align:center;letter-spacing:.14em;font-weight:800;padding:14px 0}.sec{text-align:center;padding:26px 8px}.sec .ic{font-size:62px}.sec h2{font-size:26px;margin:10px 0 4px}.sec .sub{color:var(--muted);font-size:14px}.sec p{color:#bcc7da;line-height:1.7;font-size:14.5px;margin:18px 0 0}
+.psbox{display:flex;align-items:center;justify-content:center;gap:16px;margin:8px 0 14px;font-size:30px}.psbox .tg{background:#151e33;border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:30px;letter-spacing:.12em}.psrow{background:#141c30;border:1px solid #2a3652;border-radius:14px;padding:10px 14px;font-size:32px;letter-spacing:.22em;text-align:center;flex:1;white-space:nowrap}
+.tbar{height:8px;background:#1d2740;border-radius:99px;overflow:hidden;margin:6px 0 4px}.tbar i{display:block;height:100%;width:100%;background:#ff7a59}.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.yn .btn{padding:22px;font-size:20px}.flash-ok{box-shadow:0 0 0 3px #2dd4bf inset}.flash-no{box-shadow:0 0 0 3px #ff5d73 inset}
+.rh{padding:26px 6px 6px;text-align:center}.kick{font-size:11px;letter-spacing:.22em;color:#8896ad;font-weight:800}.tn{font-size:clamp(32px,9.5vw,52px);font-weight:800;margin:10px 0 4px;letter-spacing:-.03em}
+.nick{font-size:18px;font-weight:700;color:#d2dbec}.chr{margin-top:12px;display:inline-block;background:#141c30;border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-size:14px;font-weight:700}
+.art{text-align:center;margin:10px 0 2px}.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}.lg{border:1px solid;border-radius:99px;padding:5px 12px;font-size:12px;font-weight:700}
+.ct{display:flex;justify-content:space-between;gap:10px;margin-bottom:20px;font-size:11px;letter-spacing:.14em;font-weight:850}.ct small{color:#6d7a92;font-weight:400;letter-spacing:0;text-align:right}
+.br{margin-bottom:16px}.bl{display:flex;justify-content:space-between;align-items:end;margin-bottom:7px}.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.seg i{height:16px;border-radius:6px;background:#222d47}
+.rd{border-left:3px solid;padding-left:12px;margin-top:18px}.rd:first-child{margin-top:0}.rd h3{font-size:16px;font-weight:900;margin:0 0 8px}.rd p{font-size:13.5px;line-height:1.75;color:#b8c3d8;margin:0 0 6px}
+.mini{font-size:12px;line-height:1.7;color:#8896ad;margin:0}.sh{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.sh .btn{color:#fff;font-size:13px;padding:12px}
+.footer{text-align:center;color:#6d7a92;font-size:11px;margin-top:22px}.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#27324a;color:#fff;padding:10px 16px;border-radius:12px;font-size:13px;z-index:99}
+@media(max-width:520px){.axis-grid{grid-template-columns:repeat(2,1fr)}.axis-grid .axis:last-child{grid-column:span 2}.actions.stk{position:sticky;bottom:8px}}
+</style><!--SEO-HEAD-START--><meta name="description" content="MIND 5는 언어이해·시공간·유동추론·작업기억·처리속도 5가지 사고 영역의 강점 모양을 보여 주는 비공식 퀴즈입니다. IQ 점수 없이 32문항과 45초 스피드 라운드로 구성됩니다."><link rel="stylesheet" href="../seo.css"><!--SEO-HEAD-END--><!--OG-START--><meta property="og:url" content="https://qlddka2.github.io/Bond28/mind/"><meta property="og:image" content="https://qlddka2.github.io/Bond28/og/mind.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://qlddka2.github.io/Bond28/og/mind.jpg"><!--OG-END--></head><body><svg width="0" height="0" style="position:absolute"><defs><pattern id="hp" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="6" fill="#e9eef5"/></pattern></defs></svg><div class="wrap">
+<div class="top"><div class="logo">🧠 MIND 5</div>
+<div style="display:flex;gap:10px;align-items:center"><select id="lang" onchange="setLang(this.value)"><option value="ko">한국어</option><option value="en">English</option><option value="zh">中文</option><option value="ja">日本語</option></select><div class="timer" id="timer">00:00</div></div></div>
+
+<section id="intro" class="screen active"><div class="hero"><div class="eyebrow">COGNITIVE STRENGTH MAP</div><h1 class="serif" data-k="h1"></h1><p data-k="hero"></p></div>
+<div class="card"><b data-k="how"></b><div class="axis-grid" id="axgrid"></div><p class="mini" style="margin-top:16px" data-k="guide"></p>
+<div class="actions"><button class="btn primary" onclick="start()" data-k="start"></button></div></div><!--SEO-ART-START--><section class="seo" aria-label="테스트 안내"><h2>MIND 5 사고 강점 지도 안내</h2>
+<p>MIND 5는 성인 지능검사에서 쓰는 다섯 가지 영역을 참고해 만든 가벼운 퀴즈입니다. 점수나 IQ를 계산하지 않고, 내가 어느 쪽이 도드라지는지를 <b>‘강점의 모양’</b>으로 보여 줍니다. 32문항과 45초 스피드 라운드로 구성되어 있으며 소요 시간은 약 12분입니다. <b>공식 지능검사가 아닙니다.</b></p>
+<h3>다섯 가지 영역</h3>
+<ul>
+<li><b>언어이해</b> — 단어와 개념의 관계 읽기</li>
+<li><b>시공간</b> — 도형을 머릿속에서 돌리고 맞추기</li>
+<li><b>유동추론</b> — 처음 보는 규칙과 패턴 찾기</li>
+<li><b>작업기억</b> — 숫자와 정보를 잠깐 붙잡고 다루기</li>
+<li><b>처리속도</b> — 단순한 정보를 빠르고 정확하게 훑기</li>
+</ul>
+<p>결과 화면에서는 다섯 영역을 레이더 차트로 보여 주고, 언어·개념형, 공간·설계형, 추론·패턴형, 기억·동시처리형, 속도·집중형, 균형 잡힌 만능형 중 가까운 유형과 캐릭터, 강점과 보완 팁을 알려 줍니다.</p>
+<h3>이렇게 풀어 보세요</h3>
+<ul>
+<li>정답이 있는 퀴즈지만, 모르는 문제는 감으로 골라도 괜찮습니다.</li>
+<li>스피드 라운드에서는 틀리면 감점되니 빠르면서도 정확하게 눌러 보세요.</li>
+<li>결과는 그날의 컨디션과 집중 상태에 따라 달라질 수 있어, 한 번의 결과로 능력을 단정하지 않는 것이 좋습니다.</li>
+</ul>
+<h3>자주 묻는 질문</h3>
+<p class="q">Q. IQ가 나오나요?</p><p>아니요. IQ나 지능 수준을 산출하거나 판정하지 않습니다. 영역별 강점의 모양만 보여 줍니다.</p>
+<p class="q">Q. 점수가 낮은 영역은 약점인가요?</p><p>상대적으로 덜 도드라진 영역일 뿐이며, 연습이나 도구(메모, 체크리스트 등)로 충분히 보완할 수 있습니다.</p>
+<p class="q">Q. 문제는 매번 같은가요?</p><p>문항은 섞여서 출제되며, 결과는 서버에 저장되지 않습니다.</p>
+<p class="nb">이 퀴즈는 오락과 자기이해를 위한 비임상 도구이며, 공식 지능검사나 진단을 대신하지 않습니다. 학습·발달·인지에 대한 고민은 전문 기관과 상담하세요.</p></section><!--SEO-ART-END--></section>
+
+<section id="sec" class="screen"><div class="card sec" id="secBox"></div></section>
+
+<section id="test" class="screen"><div class="meta"><span id="count"></span><span id="secName"></span></div><div class="pg"><i id="progress"></i></div>
+<div class="card"><div class="qnum" id="qnum"></div><div class="question serif" id="question"></div><div class="choices" id="choices"></div></div></section>
+
+<section id="psS" class="screen"><div class="meta"><span id="psc"></span><span id="psl"></span></div><div class="tbar"><i id="psbar"></i></div>
+<div class="card" id="psCard"><div class="qnum" style="color:#ff7a59" id="psq"></div><div class="psbox"><div class="tg" id="pstg"></div><div class="psrow" id="psrow"></div></div><div class="yn"><button class="btn primary" id="psY" onclick="psAns(true)"></button><button class="btn ghost" id="psN" onclick="psAns(false)"></button></div></div></section>
+
+<section id="result" class="screen"><div id="sbanner" class="pc" style="display:none;margin:0 0 8px"><p class="mini" data-k="sb" style="margin-bottom:12px"></p><button class="btn primary" style="width:100%" onclick="leaveShared()" data-k="sbtn"></button></div>
+<div class="rh"><div class="kick" data-k="kick"></div><div class="tn serif" id="typeName"></div><div class="nick" id="nick"></div><div class="chr" id="chr"></div></div>
+<div class="art" id="art1"></div>
+<div class="pc"><div class="ct"><span data-k="vm"></span><small data-k="vmS"></small></div><div id="radar" style="text-align:center"></div><div class="chips" id="chips"></div><div id="bars" style="margin-top:14px"></div></div>
+<div class="pc"><div class="ct"><span data-k="ty"></span></div><div id="typeDesc"></div></div>
+<div class="pc"><div class="ct"><span data-k="yr"></span><small data-k="yrS"></small></div><div id="insights"></div></div>
+<div class="pc own"><div class="ct"><span>SHARE</span></div><div class="sh">
+<button class="btn" style="background:#c9a800;color:#111" onclick="share('kakao')">카카오톡</button><button class="btn" style="background:#07a84f" onclick="share('wechat')">WeChat</button>
+<button class="btn" style="background:#06b94a" onclick="share('line')">LINE</button><button class="btn" style="background:#1fa855" onclick="share('wa')">WhatsApp</button></div></div>
+<div class="pc"><div class="ct"><span data-k="ab"></span></div><p class="mini" data-k="abT"></p>
+<div class="actions"><button class="btn ghost" onclick="restart()" data-k="again"></button><button class="btn ghost" onclick="copyResult()" data-k="copy"></button><button class="btn primary" onclick="cardOverlay()" data-k="card"></button></div>
+<div class="actions"><button class="btn" onclick="goHub()" data-k="other"></button></div></div>
+<div class="footer" data-k="foot"></div></section><!--SEO-FOOT-START--><nav class="sfoot" aria-label="사이트 정보"><a href="../about/">소개</a>·<a href="../privacy/">개인정보처리방침</a>·<a href="../terms/">이용약관</a>·<a href="../contact/">문의</a><br>© 2026 TEST LAB · 모든 테스트는 오락·자기이해용이며 진단이 아닙니다.</nav><!--SEO-FOOT-END--></div>
+<script src="../config.js"></script>
+<script src="../exit.js"></script><!--TL-JS-START--><script src="../track.js"></script><script src="../next.js"></script><!--TL-JS-END-->
+<script>
+const KAKAO_KEY=(window.SITE||{}).KAKAO_KEY||"",SHARE_BASE="",HUB_URL=(window.SITE||{}).HUB_URL||"";
+const IDXC=["#f5b042","#2dd4bf","#a78bfa","#60a5fa","#ff7a59"],IDXI=["💬","🧩","🔎","🧠","⚡"],TYC=[...IDXC,"#e6c07b"];
+const UI={
+ko:{h1:"내 머릿속<br><em>강점 지도</em>",hero:"성인 지능검사에서 쓰는 다섯 가지 영역(언어이해·시공간·유동추론·작업기억·처리속도)을 참고한 가벼운 퀴즈예요. 점수나 IQ 대신, 내가 어느 쪽이 도드라지는지 ‘강점의 모양’으로 보여줍니다. 공식 지능검사가 아닙니다.",start:"시작하기",how:"살펴보는 다섯 영역",guide:"정답이 있는 퀴즈 · 32문항 + 45초 스피드 라운드 · 약 12분 · 모르면 감으로 골라도 괜찮아요",sec:"영역",go:"이 영역 시작",vm:"STRENGTH MAP",vmS:"바깥쪽일수록 해당 영역 문항을 잘 풀었다는 뜻 (이 퀴즈 안에서의 비교)",yr:"YOUR READ",yrS:"영역별 풀이",ty:"YOUR TYPE",cha:"어울리는 캐릭터",pro:"특장점",con:"경계할 점",sup:"보조 강점",ab:"ABOUT THIS RESULT",abT:"이 퀴즈는 재미와 자기이해를 위한 비공식 도구로, 공식 지능검사(IQ)가 아니며 지능 수준을 판정하지 않습니다. 성인 지능검사(WAIS 등)의 다섯 가지 영역 구성을 참고했을 뿐이고, 문항 수가 적어 컨디션·환경·기기에 따라 결과가 달라질 수 있어요. 각 영역의 단계는 이 퀴즈 안에서의 상대적인 모양이며, 다른 사람과의 비교나 진단이 아닙니다.",again:"다시 하기",copy:"결과 복사",card:"결과 카드",foot:"MIND 5 · 공식 IQ 검사가 아닙니다 · 결과는 서버로 전송하거나 저장하지 않습니다.",save:"이미지를 길게 눌러 저장하세요",shr:"공유",kick:"지금 응답에서 도드라진 영역",copied:"링크 복사됨",sb:"친구가 공유한 ‘강점 지도’ 결과예요. 나는 어떤 모양일까요?",sbtn:"나도 해보기",other:"다른 테스트도 해보기",hubwait:"메인 페이지 준비 중이에요",yes:"있음",no:"없음",mem:"숫자를 기억하세요",left:"남은 시간",find:"찾을 기호",psq:"스피드 라운드",bal:"균형형",lvw:["","성장 영역","보통","강함","매우 강함"],tt:"약 12분"},
+en:{h1:"Your mind's<br><em>strength map</em>",hero:"A light quiz inspired by the five areas used in adult intelligence assessments: verbal comprehension, visual-spatial, fluid reasoning, working memory and processing speed. Instead of a score or IQ, it shows the shape of your strengths. This is not an official intelligence test.",start:"Get started",how:"The five areas",guide:"A quiz with right answers · 32 questions + a 45-sec speed round · about 12 min · guessing is fine",sec:"Area",go:"Start this area",vm:"STRENGTH MAP",vmS:"Farther out = you solved more items in that area (relative within this quiz)",yr:"YOUR READ",yrS:"Area by area",ty:"YOUR TYPE",cha:"Matching character",pro:"Strengths",con:"Watch out for",sup:"Second strength",ab:"ABOUT THIS RESULT",abT:"This is an unofficial quiz for fun and self-understanding. It is not an official intelligence (IQ) test and does not judge intelligence. It only borrows the five-area structure of adult assessments such as the WAIS; with so few items, results vary with mood, environment and device. Levels show your own shape within this quiz, not a comparison with others or a diagnosis.",again:"Retake",copy:"Copy result",card:"Result card",foot:"MIND 5 · Not an official IQ test · Results are never sent or stored on a server.",save:"Press and hold the image to save",shr:"Share",kick:"Your standout area right now",copied:"Link copied",sb:"A friend shared their ‘strength map’. What shape are you?",sbtn:"Try it myself",other:"Try other tests",hubwait:"Main page coming soon",yes:"Yes",no:"No",mem:"Remember the digits",left:"Time left",find:"Find",psq:"SPEED ROUND",bal:"Balanced",lvw:["","Room to grow","Average","Strong","Very strong"],tt:"~12 min"},
+zh:{h1:"我的大脑<br><em>优势地图</em>",hero:"参考成人智力测验常用的五个领域（言语理解、视觉空间、流体推理、工作记忆、加工速度）设计的轻量小测验。不给分数或IQ，而是用“优势的形状”告诉你哪一块更突出。这不是正式的智力测验。",start:"开始",how:"观察的五个领域",guide:"有标准答案的测验 · 32题 + 45秒速度挑战 · 约12分钟 · 不会的可以凭感觉选",sec:"领域",go:"开始这个领域",vm:"STRENGTH MAP",vmS:"越靠外表示该领域答得越好（仅限本测验内的相对比较）",yr:"YOUR READ",yrS:"各领域解读",ty:"YOUR TYPE",cha:"适合的角色",pro:"优点",con:"需要留意",sup:"次要优势",ab:"ABOUT THIS RESULT",abT:"本测验是用于娱乐与自我了解的非正式工具，不是正式的智力（IQ）测验，也不评判智力水平。仅参考了WAIS等成人智力测验的五领域结构；题目较少，结果会受状态、环境和设备影响。各领域的等级只是本测验内的相对形状，并非与他人比较或诊断。",again:"重新测试",copy:"复制结果",card:"结果卡片",foot:"MIND 5 · 非正式IQ测验 · 结果不会上传或保存到服务器。",save:"长按图片保存",shr:"分享",kick:"目前作答中最突出的领域",copied:"链接已复制",sb:"这是朋友分享的“优势地图”，你是什么形状？",sbtn:"我也来试试",other:"也试试其他测试",hubwait:"主页准备中",yes:"有",no:"没有",mem:"请记住数字",left:"剩余时间",find:"要找的符号",psq:"速度挑战",bal:"均衡型",lvw:["","成长空间","中等","较强","很强"],tt:"约12分钟"},
+ja:{h1:"わたしの頭の中<br><em>強みマップ</em>",hero:"成人の知能検査で使われる5つの領域（言語理解・視空間・流動性推理・ワーキングメモリ・処理速度）を参考にした気軽なクイズです。点数やIQではなく、どこが際立つかを「強みの形」で示します。公式の知能検査ではありません。",start:"はじめる",how:"見ていく5つの領域",guide:"正解のあるクイズ · 32問 + 45秒スピードラウンド · 約12分 · わからなければ勘でOK",sec:"領域",go:"この領域を始める",vm:"STRENGTH MAP",vmS:"外側ほどその領域をよく解けたことを示します（このクイズ内での相対比較）",yr:"YOUR READ",yrS:"領域ごとの読み解き",ty:"YOUR TYPE",cha:"ぴったりのキャラクター",pro:"強み",con:"気をつけたい点",sup:"サブの強み",ab:"ABOUT THIS RESULT",abT:"このクイズは楽しみと自己理解のための非公式ツールで、公式の知能検査（IQ）ではなく、知能の高低を判定しません。WAISなど成人向け検査の5領域の構成を参考にしただけで、問題数が少ないため、体調・環境・端末によって結果は変わります。各領域の段階はこのクイズ内での相対的な形であり、他人との比較や診断ではありません。",again:"もう一度",copy:"結果をコピー",card:"結果カード",foot:"MIND 5 · 公式のIQ検査ではありません · 結果はサーバーに送信・保存されません。",save:"画像を長押しして保存",shr:"共有",kick:"今の回答で際立つ領域",copied:"リンクをコピーしました",sb:"友だちが共有した「強みマップ」です。あなたはどんな形？",sbtn:"わたしもやってみる",other:"ほかのテストも見る",hubwait:"メインページ準備中",yes:"ある",no:"ない",mem:"数字を覚えてください",left:"残り時間",find:"探す記号",psq:"スピードラウンド",bal:"バランス型",lvw:["","伸びしろ","ふつう","強い","とても強い"],tt:"約12分"}};
+const IN={ko:["언어이해","시공간","유동추론","작업기억","처리속도"],en:["Verbal","Visual-Spatial","Reasoning","Memory","Speed"],zh:["言语理解","视觉空间","流体推理","工作记忆","加工速度"],ja:["言語理解","視空間","流動性推理","ワーキングメモリ","処理速度"]};
+const ISUB={ko:["단어와 개념의 관계 읽기","도형을 머릿속에서 돌리기","처음 보는 규칙 찾기","숫자를 붙잡고 다루기","빠르고 정확하게 훑기"],en:["Reading word relations","Rotating shapes in mind","Spotting new rules","Holding & using digits","Scanning fast and right"],zh:["读懂词语关系","在脑中旋转图形","发现陌生规则","记住并运用数字","又快又准地扫描"],ja:["言葉の関係を読む","図形を頭の中で回す","初見のルールを見抜く","数字を保持して扱う","速く正確に見分ける"]};
+const SECI={ko:["두 가지의 공통점이나 관계를 가장 잘 설명하는 것을 고르세요.","위쪽 도형을 돌려서(뒤집지 않고) 똑같이 만들 수 있는 것을 고르세요.","빈칸에 들어갈 규칙에 맞는 것을 고르세요. 도형과 숫자 문제가 섞여 있어요.","숫자가 잠깐 나타났다 사라집니다. 기억한 뒤 지시에 맞게 배열한 것을 고르세요.","제한 시간 45초. 왼쪽 기호 중 하나라도 오른쪽 줄에 있으면 ‘있음’, 없으면 ‘없음’을 최대한 빠르게 누르세요. 틀리면 감점됩니다."],
+en:["Choose the option that best explains what the two have in common, or how they relate.","Choose the shape you get by rotating the top shape (not flipping it).","Choose what fits the blank. Shape and number puzzles are mixed.","Digits appear briefly, then vanish. Remember them and choose the right arrangement.","45 seconds. If either symbol on the left appears in the row on the right, press Yes; otherwise No. Be fast. Wrong answers cost points."],
+zh:["选出最能说明两者共同点或关系的选项。","选出把上方图形旋转（不翻转）后得到的图形。","选出符合规则、可填入空白处的选项。图形题和数字题混合出现。","数字会短暂出现后消失。记住后选出按要求排列的结果。","限时45秒。左边符号只要有一个出现在右边一行里就按“有”，否则按“没有”。越快越好，答错会扣分。"],
+ja:["2つの共通点や関係を最もよく説明するものを選んでください。","上の図形を回転させて（裏返さずに）作れるものを選んでください。","空欄に入るルールに合うものを選んでください。図形と数字の問題が混ざっています。","数字が一瞬だけ表示されて消えます。覚えて、指示どおりに並べたものを選んでください。","制限時間45秒。左の記号のどちらかが右の列にあれば「ある」、なければ「ない」をできるだけ速く押してください。間違えると減点です。"]};
+const VC={ko:[["‘사과’와 ‘바나나’의 공통점은?","둘 다 과일이다","둘 다 채소이다","둘 다 곡식이다","둘 다 견과류이다"],["‘시계’와 ‘온도계’의 공통점은?","무언가를 재는 도구이다","집안 가구이다","요리 재료이다","옷의 종류이다"],["‘민주주의’와 ‘군주제’의 공통점은?","나라를 다스리는 방식이다","경제 지표이다","기후의 종류이다","예술 사조이다"],["‘모호하다’와 가장 가까운 뜻은?","뜻이 분명하지 않다","태도가 단호하다","행동이 신중하다","표현이 과장되다"],["‘법’과 ‘도덕’의 공통점은?","사람의 행동을 이끄는 사회적 규범이다","국가가 강제하는 처벌 규칙이다","종교에서 비롯된 가르침이다","헌법에 적혀 있는 조항이다"],["‘거울’과 ‘메아리’의 공통점은?","받은 것을 되돌려 보낸다","둘 다 소리를 낸다","둘 다 빛을 낸다","둘 다 자연에서만 생긴다"],["‘시(詩)’와 ‘교향곡’의 공통점은?","형식을 빌려 감정과 생각을 표현하는 예술이다","둘 다 악보에 적혀 있다","둘 다 소리 내어 읽어야 한다","둘 다 길수록 좋은 작품이다"],["‘댐’과 ‘퓨즈’의 공통점은?","흐름을 제한해 더 큰 피해를 막는다","둘 다 전기와 관련 있다","둘 다 물을 저장한다","둘 다 한 번 쓰면 못 쓴다"]],
+en:[["What do ‘apple’ and ‘banana’ have in common?","Both are fruits","Both are vegetables","Both are grains","Both are nuts"],["What do a ‘clock’ and a ‘thermometer’ have in common?","Both are instruments for measuring","Both are furniture","Both are cooking ingredients","Both are clothing"],["What do ‘democracy’ and ‘monarchy’ have in common?","Both are ways of governing a country","Both are economic indicators","Both are types of climate","Both are art movements"],["Which is closest in meaning to ‘ambiguous’?","Unclear in meaning","Firm in attitude","Careful in action","Exaggerated in expression"],["What do ‘law’ and ‘morality’ have in common?","Both are social norms guiding behavior","Both are punishment rules enforced by the state","Both are teachings from religion","Both are clauses of a constitution"],["What do a ‘mirror’ and an ‘echo’ have in common?","Both send back what they receive","Both make sound","Both give off light","Both only occur in nature"],["What do a ‘poem’ and a ‘symphony’ have in common?","Both use form to express feeling and ideas","Both are written in musical notation","Both must be read aloud","Both are better the longer they are"],["What do a ‘dam’ and a ‘fuse’ have in common?","Both limit a flow to prevent bigger damage","Both involve electricity","Both store water","Both can only be used once"]],
+zh:[["“苹果”和“香蕉”的共同点是？","都是水果","都是蔬菜","都是谷物","都是坚果"],["“钟表”和“温度计”的共同点是？","都是用来测量的工具","都是家具","都是烹饪食材","都是衣物"],["“民主制”和“君主制”的共同点是？","都是治理国家的方式","都是经济指标","都是气候类型","都是艺术流派"],["与“含糊”意思最接近的是？","意思不清楚","态度坚决","行事谨慎","表达夸张"],["“法律”和“道德”的共同点是？","都是引导人们行为的社会规范","都是国家强制执行的惩罚规则","都是源自宗教的教义","都是宪法中的条文"],["“镜子”和“回声”的共同点是？","都把接收到的东西反射回去","都会发出声音","都会发光","都只出现在自然界"],["“诗”和“交响曲”的共同点是？","都借助形式表达情感与思想","都写在乐谱上","都必须朗读出声","都是越长越好"],["“水坝”和“保险丝”的共同点是？","都限制流动以避免更大损失","都与电有关","都能储水","都只能用一次"]],
+ja:[["「りんご」と「バナナ」の共通点は？","どちらも果物","どちらも野菜","どちらも穀物","どちらもナッツ"],["「時計」と「温度計」の共通点は？","どちらも何かを測る道具","どちらも家具","どちらも料理の材料","どちらも衣類"],["「民主主義」と「君主制」の共通点は？","どちらも国の統治のしかた","どちらも経済指標","どちらも気候の種類","どちらも芸術の潮流"],["「曖昧」に最も近い意味は？","はっきりしない","態度が断固としている","行動が慎重である","表現が大げさである"],["「法」と「道徳」の共通点は？","どちらも行動を導く社会的規範","どちらも国家が強制する罰則","どちらも宗教由来の教え","どちらも憲法の条文"],["「鏡」と「こだま」の共通点は？","どちらも受けたものを跳ね返す","どちらも音を出す","どちらも光を出す","どちらも自然にしかない"],["「詩」と「交響曲」の共通点は？","どちらも形式を借りて感情や考えを表す","どちらも楽譜に書かれる","どちらも声に出して読む","どちらも長いほど良い"],["「ダム」と「ヒューズ」の共通点は？","どちらも流れを制限して大きな被害を防ぐ","どちらも電気に関係する","どちらも水をためる","どちらも一度しか使えない"]]};
+const WMQ={ko:["작은 수부터 순서대로 놓으면?","나타난 순서의 거꾸로(마지막 숫자부터) 읽으면?"],en:["Arrange from smallest to largest:","Read them in reverse order (starting from the last):"],zh:["按从小到大的顺序排列：","按出现顺序的倒序（从最后一个数字起）：" ],ja:["小さい順に並べると？","出てきた順の逆（最後の数字から）に読むと？"]};
+const FRQ={ko:["빈칸에 들어갈 것은?","빈칸에 들어갈 도형은?"],en:["What goes in the blank?","Which shape goes in the blank?"],zh:["空白处应填？","空白处应填哪个图形？"],ja:["空欄に入るのは？","空欄に入る図形は？"]};
+const VSQ={ko:"위 도형을 돌리면 만들 수 있는 것은? (뒤집기 X)",en:"Which one can you make by rotating this shape? (no flipping)",zh:"旋转下面的图形能得到哪个？（不可翻转）",ja:"この図形を回転させて作れるのは？（裏返しは不可）"};
+const TY={ko:[["언어·개념형","사전 속에 사는 탐험가","🦉 지혜로운 올빼미","단어와 개념 사이의 관계를 빠르게 잡아내고, 복잡한 내용을 말로 쉽게 풀어냅니다. 읽고 설명하고 설득하는 일에서 힘이 나요.","말로 정리되지 않는 감각(도형, 숫자, 직관)을 가볍게 넘기기 쉬워요. 말이 앞서 행동이 늦어지지 않게, 가끔은 직접 손으로 해보세요."],
+["공간·설계형","상상으로 먼저 짓는 건축가","🦫 부지런한 비버","눈에 보이는 형태를 머릿속에서 돌리고 맞추는 감각이 좋습니다. 지도, 도면, 조립, 디자인에서 감이 빨라요.","‘보면 아는 것’을 말로 설명하는 데 시간이 걸릴 수 있어요. 설명할 땐 스케치를 곁들이면 훨씬 잘 전달됩니다."],
+["추론·패턴형","낯선 문제의 규칙을 캐내는 탐정","🦊 눈 밝은 여우","처음 보는 문제에서도 규칙과 관계를 찾아냅니다. 새로운 상황에 빨리 적응하고, 막힌 문제의 돌파구를 잘 찾아요.","규칙이 없는 곳에서도 패턴을 찾으려다 과하게 해석할 수 있어요. 가끔은 ‘그냥 우연’일 수도 있다는 여지를 남겨 두세요."],
+["기억·동시처리형","머릿속에서 여러 개를 굴리는 저글러","🐙 팔 많은 문어","정보를 잠깐 붙잡고 동시에 다루는 힘이 좋아요. 암산, 대화 흐름 따라가기, 여러 일 병행에 강합니다.","머릿속에만 담아 두다 과부하가 올 수 있어요. 메모와 체크리스트를 쓰면 훨씬 여유로워집니다."],
+["속도·집중형","보자마자 반응하는 스피드러너","🐆 날쌘 치타","단순한 정보를 빠르고 정확하게 훑고 처리합니다. 반복 업무, 확인 작업, 즉각적인 판단에서 효율이 높아요.","속도가 앞서 세부를 놓칠 수 있어요. 중요한 일은 한 번 더 확인하는 습관을 들이면 강점이 더 빛납니다."],
+["균형 잡힌 만능형","한쪽에 쏠리지 않는 올라운더","🐬 영리한 돌고래","특정 영역에 크게 치우치지 않은 고른 모양입니다. 어떤 과제든 부담 없이 시작하고, 상황에 맞춰 쓰는 능력을 바꿔 가며 풀어갈 수 있어요.","뚜렷한 ‘한 방’이 없다고 느낄 수 있어요. 가장 재미있는 영역 하나를 골라 깊게 파 보면 강점이 선명해집니다."]],
+en:[["Words & Concepts","The explorer who lives in the dictionary","🦉 Wise owl","You quickly see how words and ideas relate, and explain complex things simply. Reading, explaining and persuading are where you shine.","You may skim past things words can't capture (shapes, numbers, hunches). Don't let talking outrun doing, so sometimes try it by hand."],
+["Space & Design","The architect who builds in imagination first","🦫 Busy beaver","You're good at rotating and fitting forms in your head. Maps, blueprints, assembly and design come quickly to you.","Explaining what you ‘just see’ can take time. Adding a quick sketch will carry your ideas much further."],
+["Reasoning & Patterns","The detective who cracks unfamiliar rules","🦊 Sharp-eyed fox","You find rules and relationships even in problems you've never seen. You adapt fast and find breakthroughs when stuck.","You may over-read patterns where none exist. Leave room for ‘maybe it's just chance’ now and then."],
+["Memory & Multitasking","The juggler keeping many things in mind","🐙 Many-armed octopus","You hold and work with information at the same time. Mental math, following conversations and juggling tasks come naturally.","Keeping everything in your head can overload you. Notes and checklists will give you breathing room."],
+["Speed & Focus","The speedrunner who reacts on sight","🐆 Swift cheetah","You scan and process simple information fast and accurately. Repetitive work, checking and instant judgment are your zone.","Speed can outrun detail. A habit of one more check on important things makes the strength shine."],
+["Balanced All-rounder","The all-rounder who doesn't lean one way","🐬 Clever dolphin","Your shape is even, not leaning hard toward any area. You can start any task comfortably and switch which ability you use as needed.","You may feel you lack one standout skill. Pick the area you enjoy most and go deep, and your strength will sharpen."]],
+zh:[["语言·概念型","住在词典里的探险家","🦉 睿智的猫头鹰","能很快抓住词语与概念之间的关系，把复杂内容讲得通俗易懂。阅读、解释、说服时最有力量。","容易轻视无法用语言表达的感觉（图形、数字、直觉）。别让说得多于做得，偶尔亲手试一试。"],
+["空间·设计型","先在想象中建造的建筑师","🦫 勤劳的海狸","擅长在脑中旋转、拼合看得见的形状。地图、图纸、组装和设计上上手很快。","“一看就懂”的东西可能要花时间才能讲清楚。配上草图，表达会好得多。"],
+["推理·规律型","破解陌生规则的侦探","🦊 眼尖的狐狸","面对初见的问题也能找出规则与关系。适应新情境快，卡住时善于找到突破口。","有时会在没有规律的地方过度解读。偶尔留一点“也许只是巧合”的余地。"],
+["记忆·多任务型","脑中同时转动多件事的杂耍家","🐙 多臂章鱼","能暂时记住信息并同时处理。心算、跟上对话、多任务并行都很在行。","只靠脑子记容易过载。用便签和清单会轻松很多。"],
+["速度·专注型","一看到就反应的速度选手","🐆 敏捷的猎豹","能又快又准地扫描、处理简单信息。重复性工作、核对、即时判断效率很高。","速度太快可能漏掉细节。重要的事养成再确认一次的习惯，优势会更闪亮。"],
+["均衡全能型","不偏向任何一边的全能选手","🐬 聪明的海豚","形状均匀，没有明显偏向某一领域。任何任务都能从容开始，并按情况切换使用的能力。","可能觉得没有特别突出的“一招”。选一个最有兴趣的领域深挖，优势会变得鲜明。"]],
+ja:[["言語・概念タイプ","辞書に住む探検家","🦉 賢いフクロウ","言葉や概念の関係をすばやくつかみ、複雑な内容をやさしく言葉にできます。読む・説明する・説得するときに力を発揮します。","言葉にしにくい感覚（図形・数字・直感）を軽く流しがち。言葉が先行して動きが遅れないよう、ときには手を動かしてみましょう。"],
+["空間・設計タイプ","想像の中で先に建てる建築家","🦫 働き者のビーバー","目に見える形を頭の中で回したり合わせたりする感覚が優れています。地図・図面・組み立て・デザインで勘が冴えます。","「見ればわかる」ことを言葉で説明するのに時間がかかることも。スケッチを添えるとぐっと伝わります。"],
+["推理・パターンタイプ","未知のルールを暴く探偵","🦊 目ざといキツネ","初めて見る問題でもルールや関係を見つけ出します。新しい状況への適応が早く、行き詰まりの突破口も見つけます。","ルールのないところにまでパターンを探して深読みすることも。ときには「ただの偶然かも」と余地を残しましょう。"],
+["記憶・同時処理タイプ","頭の中で複数を回すジャグラー","🐙 腕の多いタコ","情報を一時的に保持しながら同時に扱う力があります。暗算、会話の流れの把握、複数作業の並行が得意です。","頭の中だけで抱えると負荷がかかります。メモやチェックリストを使うと楽になります。"],
+["スピード・集中タイプ","見た瞬間に反応するスピードランナー","🐆 俊敏なチーター","単純な情報を速く正確に見て処理します。反復作業、確認、即断の場面で効率が高いタイプです。","速さが先行して細部を見落とすことも。大事なことはもう一度確認する習慣で強みがさらに輝きます。"],
+["バランス万能タイプ","どちらにも偏らないオールラウンダー","🐬 賢いイルカ","特定の領域に大きく偏らない、均整のとれた形です。どんな課題も気負わず始められ、状況に合わせて使う力を切り替えられます。","「これだ」という決め手がないと感じるかも。いちばん楽しい領域をひとつ選んで深めると、強みがはっきりします。"]]};
+const INS={ko:[["개념 사이의 관계를 빠르게 파악하고 말로 정리하는 힘이 두드러져요. 읽고 설명하고 설득하는 일에서 강점이 납니다.","말로 풀어내는 연습이 도움이 돼요. 읽은 것을 한두 문장으로 요약해서 말해 보면 이 영역이 쑥쑥 자랍니다."],["형태를 머릿속에서 돌리고 맞추는 감각이 좋아요. 지도, 도면, 조립, 디자인에서 감이 빠를 수 있어요.","퍼즐, 블록, 길 찾기처럼 가벼운 공간 놀이로 감각을 깨울 수 있어요."],["처음 보는 문제에서도 규칙을 찾아내요. 낯선 상황에서 돌파구를 찾는 힘이 있습니다.","스도쿠나 규칙 찾기 퀴즈처럼 ‘왜 그렇게 되지?’를 묻는 놀이가 도움이 돼요."],["정보를 잠깐 붙잡고 동시에 다루는 힘이 좋아요. 암산, 대화 흐름 따라가기, 여러 일 병행에 유리합니다.","메모와 체크리스트를 쓰면 부담이 줄어요. 숫자를 묶어서 기억하는 ‘청킹’도 좋은 요령입니다."],["단순한 정보를 빠르고 정확하게 훑어 처리해요. 반복 확인 작업과 즉각 판단에서 효율이 좋습니다.","속도는 컨디션과 집중에 크게 좌우돼요. 방해 요소를 줄이고 몸 상태를 챙기면 금방 달라질 수 있어요."]],
+en:[["You quickly grasp relationships between ideas and put them into words. Reading, explaining and persuading are strengths.","Practice putting things into words. Summing up what you read in a sentence or two grows this area fast."],["You have a knack for rotating and fitting forms mentally. Maps, blueprints, assembly and design may come quickly.","Light spatial play, such as puzzles, blocks or reading maps, can wake this sense up."],["You find rules even in unfamiliar problems, and can spot a breakthrough in new situations.","Games that ask ‘why does that happen?’, like sudoku or rule-finding quizzes, help."],["You hold information briefly while working with it. Mental math, following conversations and juggling tasks suit you.","Notes and checklists lighten the load. ‘Chunking’ digits into groups is a good trick too."],["You scan and process simple information quickly and accurately. Repetitive checking and snap judgments go well.","Speed depends a lot on condition and focus. Cut distractions and look after your body and it can change fast."]],
+zh:[["能快速把握概念之间的关系并用语言整理出来。阅读、解释、说服是你的强项。","练习用语言表达会有帮助。把读到的内容用一两句话概括出来，这一领域会很快成长。"],["擅长在脑中旋转、拼合形状。地图、图纸、组装和设计上可能上手很快。","拼图、积木、看地图这类轻松的空间游戏能唤醒这份感觉。"],["面对陌生问题也能找出规则，在陌生情境中有找到突破口的能力。","数独或找规律这类追问“为什么会这样”的游戏很有帮助。"],["能暂时记住信息并同时处理。心算、跟上对话、多任务并行比较有利。","用便签和清单能减轻负担。把数字分组记忆（组块化）也是好办法。"],["能又快又准地扫描、处理简单信息。重复核对和即时判断效率不错。","速度很大程度上取决于状态和专注。减少干扰、照顾好身体，很快就会不同。"]],
+ja:[["概念同士の関係をすばやくつかみ、言葉に整理する力が際立ちます。読む・説明する・説得することが強みです。","言葉にする練習が役立ちます。読んだ内容を一、二文で要約して話してみると、この領域がぐんと伸びます。"],["形を頭の中で回したり合わせたりする感覚が優れています。地図・図面・組み立て・デザインで勘が早いかもしれません。","パズル、ブロック、地図読みなどの軽い空間遊びで感覚が目覚めます。"],["初めての問題でもルールを見つけ出し、未知の状況で突破口を探す力があります。","数独やルール探しのクイズなど、「なぜそうなる？」を考える遊びが役立ちます。"],["情報を一時的に保持しながら同時に扱う力があります。暗算、会話の流れの把握、複数作業の並行に向いています。","メモやチェックリストで負担が減ります。数字をまとまりで覚える「チャンキング」も良いコツです。"],["単純な情報を速く正確に見て処理します。繰り返しの確認や即断に向いています。","スピードは体調や集中に大きく左右されます。妨げを減らし体調を整えれば、すぐ変わります。"]]};
+let lang="ko",items=[],cur=0,startAt=0,ti=null,last=null,ps={},wmTok=0;
+const $=id=>document.getElementById(id);
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+/* ---------- polyomino (시공간) ---------- */
+const norm=c=>{const mx=Math.min(...c.map(p=>p[0])),my=Math.min(...c.map(p=>p[1]));return c.map(p=>[p[0]-mx,p[1]-my]).sort((a,b)=>a[0]-b[0]||a[1]-b[1])};
+const key=c=>norm(c).map(p=>p.join(",")).join(";");
+const rot=c=>norm(c.map(p=>[-p[1],p[0]])),mir=c=>norm(c.map(p=>[-p[0],p[1]]));
+const rotsK=c=>{const o=[];let x=norm(c);for(let i=0;i<4;i++){o.push(key(x));x=rot(x)}return o};
+const rotN=(c,n)=>{let x=norm(c);for(let i=0;i<n;i++)x=rot(x);return x};
+const NB=[[1,0],[-1,0],[0,1],[0,-1]];
+function connected(c){const s=new Set(c.map(p=>p.join(","))),st=[c[0]],seen=new Set([c[0].join(",")]);while(st.length){const p=st.pop();NB.forEach(d=>{const q=[p[0]+d[0],p[1]+d[1]],k=q.join(",");if(s.has(k)&&!seen.has(k)){seen.add(k);st.push(q)}})}return seen.size===c.length}
+function genVS(k){const N=[5,5,6,6,7,7,8,8][k],nm=[1,1,2,2,3,3,3,3][k];
+ for(let a=0;a<4000;a++){const R=rng(1000+k*131+a);let c=[[0,0]];
+  while(c.length<N){const p=c[Math.floor(R()*c.length)],d=NB[Math.floor(R()*4)],q=[p[0]+d[0],p[1]+d[1]];if(!c.some(x=>x[0]===q[0]&&x[1]===q[1]))c.push(q)}
+  c=norm(c);const w=Math.max(...c.map(p=>p[0]))+1,h=Math.max(...c.map(p=>p[1]))+1;if(w>4||h>4||Math.min(w,h)<2||(N>=7&&Math.min(w,h)<3))continue;
+  const rk=rotsK(c),mk=key(mir(c));if(rk.includes(mk))continue;
+  const used=new Set(rk);const cor=rotN(c,1+Math.floor(R()*3));if(key(cor)===key(c))continue;
+  const opts=[cor];used.add(key(cor));
+  const mrots=[0,1,2,3].map(n=>rotN(mir(c),n));let mi=shuffle(mrots.slice()).slice(0,nm);
+  let ok=true;const dis=[];mi.forEach(m=>{if(!used.has(key(m))){used.add(key(m));dis.push(m)}});
+  let tries=0;while(dis.length<3&&tries++<200){const m=c.map(p=>p.slice()),i=Math.floor(R()*m.length),rest=m.filter((_,j)=>j!==i);if(!connected(rest))continue;const p=rest[Math.floor(R()*rest.length)],d=NB[Math.floor(R()*4)],q=[p[0]+d[0],p[1]+d[1]];if(rest.some(x=>x[0]===q[0]&&x[1]===q[1]))continue;const nc=norm(rest.concat([q]));if(!connected(nc))continue;const kk=rotsK(nc).concat([key(mir(nc))]);if(kk.some(z=>used.has(z)))continue;rotsK(nc).forEach(z=>used.add(z));used.add(key(nc));dis.push(nc)}
+  if(dis.length<3)continue;return{stem:c,v:[cor,...dis.slice(0,3)]}}
+ throw new Error("vs gen "+k)}
+function polySvg(c,u){const w=Math.max(...c.map(p=>p[0]))+1,h=Math.max(...c.map(p=>p[1]))+1,V=5*u,ox=(V-w*u)/2,oy=(V-h*u)/2;return `<svg viewBox="0 0 ${V} ${V}">${c.map(p=>`<rect x="${ox+p[0]*u+1}" y="${oy+p[1]*u+1}" width="${u-2}" height="${u-2}" rx="3" fill="#2dd4bf" stroke="#0a0f1d" stroke-width="1"/>`).join("")}</svg>`}
+/* ---------- matrices / series (유동추론) ---------- */
+function shp(s,cx,cy,z,f){const fill=f==0?"#e9eef5":f==1?"none":"url(#hp)",st='stroke="#e9eef5" stroke-width="2.4"';
+ if(s==0)return `<circle cx="${cx}" cy="${cy}" r="${z}" fill="${fill}" ${st}/>`;
+ if(s==1)return `<rect x="${cx-z}" y="${cy-z}" width="${2*z}" height="${2*z}" fill="${fill}" ${st}/>`;
+ return `<polygon points="${cx},${cy-z} ${cx+z*1.1},${cy+z*0.9} ${cx-z*1.1},${cy+z*0.9}" fill="${fill}" ${st}/>`}
+function cellSvg(sp,ox,oy){const z=[11,8,6][sp.n-1],g=z*2+4;let o="";for(let i=0;i<sp.n;i++)o+=shp(sp.s,ox+30+(i-(sp.n-1)/2)*g,oy+30,z,sp.f);return o}
+const MAT=[(r,c)=>({s:(r+c)%3,n:1,f:0}),(r,c)=>({s:r,n:c+1,f:0}),(r,c)=>({s:(r+c)%3,n:r+1,f:c}),(r,c)=>({s:(r+2*c)%3,n:((r+c)%3)+1,f:r===c?1:0})];
+function genMat(mi){const f=MAT[mi],ans=f(2,2),cand=[];
+ for(let s=0;s<3;s++)if(s!==ans.s)cand.push({...ans,s});for(let n=1;n<=3;n++)if(n!==ans.n)cand.push({...ans,n});for(let q=0;q<3;q++)if(q!==ans.f)cand.push({...ans,f:q});
+ const dis=shuffle(cand).slice(0,3);return{mi,v:[ans,...dis]}}
+function matSvg(mi){let o="";const f=MAT[mi];for(let r=0;r<3;r++)for(let c=0;c<3;c++){const x=c*66,y=r*66;o+=`<rect x="${x}" y="${y}" width="60" height="60" rx="8" fill="#141c30" stroke="#2a3652"/>`;o+=(r===2&&c===2)?`<text x="${x+30}" y="${y+41}" text-anchor="middle" font-size="34" fill="#2dd4bf" font-weight="800">?</text>`:cellSvg(f(r,c),x,y)}return `<svg viewBox="-2 -2 196 196" style="width:min(70%,230px)">${o}</svg>`}
+const optSvg=sp=>`<svg viewBox="0 0 60 60"><rect width="60" height="60" rx="8" fill="#0f1528"/>${cellSvg(sp,0,0)}</svg>`;
+const SER=[["2, 4, 8, 16, ?",[32,24,30,34]],["3, 4, 6, 9, 13, ?",[18,17,19,21]],["7, 10, 9, 12, 11, ?",[14,13,15,16]],["1, 4, 2, 8, 6, 24, ?",[22,20,28,30]]];
+/* ---------- working memory ---------- */
+function genWM(k){const L=[4,4,5,5,6,6,7,7][k],mode=k%2,R=rng(7000+k*17);for(;;){const d=shuffle([1,2,3,4,5,6,7,8,9]).slice(0,L);const sorted=d.slice().sort((a,b)=>a-b),want=mode?d.slice().reverse():sorted;const same=a=>a.join()===want.join();if(same(d))continue;
+ const sw=(a,i)=>{const b=a.slice();[b[i],b[i+1]]=[b[i+1],b[i]];return b};const set=new Map();set.set(want.join(),want);
+ const cands=[sw(want,0),sw(want,L-2),sw(want,1),mode?sorted:d,sw(want,Math.floor(L/2))];
+ for(const c of cands){if(!set.has(c.join()))set.set(c.join(),c);if(set.size===4)break}
+ if(set.size<4)continue;const v=[...set.values()].slice(0,4);v.sort((a,b)=>(a.join()===want.join()?-1:0)-(b.join()===want.join()?-1:0));return{digits:d,mode,v}}}
+/* ---------- build ---------- */
+const W=[1,1,1,2,2,2,3,3];
+function build(){const it=[],K=8;
+ for(let k=0;k<K;k++)it.push({sec:0,k,w:W[k],o:shuffle([0,1,2,3])});
+ for(let k=0;k<K;k++){const g=genVS(k);it.push({sec:1,k,w:W[k],o:shuffle([0,1,2,3]),stem:g.stem,v:g.v})}
+ const PL=["s0","m0","m1","s1","m2","s2","s3","m3"];let si=0;
+ for(let k=0;k<K;k++){const base={sec:2,k,w:W[k],o:shuffle([0,1,2,3])},p=PL[k];if(p[0]==="s"){const s=SER[+p[1]];it.push({...base,ser:s[0],v:s[1]})}else{const g=genMat(+p[1]);it.push({...base,mi:g.mi,v:g.v})}}
+ for(let k=0;k<K;k++){const g=genWM(k);it.push({sec:3,k,w:W[k],o:shuffle([0,1,2,3]),digits:g.digits,mode:g.mode,v:g.v})}
+ return it}
+/* ---------- flow ---------- */
+function persistLang(){try{localStorage.setItem("site_lang",lang)}catch(e){}}
+function tick(){clearInterval(ti);ti=setInterval(()=>{const s=Math.floor((Date.now()-startAt)/1000);$("timer").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},1000)}
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");window.scrollTo(0,0)}
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+function start(){items=build();cur=0;ps={};startAt=Date.now();tick();showSec(0)}
+function showSec(s){const u=UI[lang];$("secBox").innerHTML=`<div class="ic">${IDXI[s]}</div><div class="qnum" style="color:${IDXC[s]}">${u.sec} ${s+1} / 5</div><h2 class="serif" style="color:${IDXC[s]}">${IN[lang][s]}</h2><div class="sub">${ISUB[lang][s]}</div><p>${SECI[lang][s]}</p><div class="actions"><button class="btn primary" onclick="beginSec(${s})">${s===4?u.start:u.go}</button></div>`;show("sec");window.curSec=s}
+function beginSec(s){if(s<4){show("test");renderQ()}else startPS()}
+function advance(){if(cur<31){cur++;if(items[cur].sec!==items[cur-1].sec)showSec(items[cur].sec);else renderQ()}else showSec(4)}
+function renderQ(){const it=items[cur],u=UI[lang],s=it.sec;$("count").textContent=`${cur+1} / 32`;$("secName").textContent=`${IDXI[s]} ${IN[lang][s]}`;$("secName").style.color=IDXC[s];$("qnum").textContent=`Q${String(cur+1).padStart(2,"0")}`;$("qnum").style.color=IDXC[s];$("progress").style.width=((cur+1)/33*100)+"%";
+ const ch=$("choices");let q="",html="",vis=false;
+ if(s===0){const d=VC[lang][it.k];q=d[0];html=it.o.map((oi,j)=>`<div class="choice"><input type="radio" name="a" id="c${j}" value="${j}" ${it.a===j?"checked":""}><label for="c${j}">${d[1+oi]}</label></div>`)}
+ else if(s===1){vis=true;q=VSQ[lang]+polySvg(it.stem,22).replace("<svg",'<svg style="width:min(52%,190px)"');html=it.o.map((oi,j)=>`<div class="choice"><input type="radio" name="a" id="c${j}" value="${j}" ${it.a===j?"checked":""}><label for="c${j}">${polySvg(it.v[oi],18)}</label></div>`)}
+ else if(s===2){if(it.ser){q=`${FRQ[lang][0]}<div class="big mono">${it.ser}</div>`;html=it.o.map((oi,j)=>`<div class="choice"><input type="radio" name="a" id="c${j}" value="${j}" ${it.a===j?"checked":""}><label for="c${j}" class="mono">${it.v[oi]}</label></div>`)}
+  else{vis=true;q=FRQ[lang][1]+matSvg(it.mi);html=it.o.map((oi,j)=>`<div class="choice"><input type="radio" name="a" id="c${j}" value="${j}" ${it.a===j?"checked":""}><label for="c${j}">${optSvg(it.v[oi])}</label></div>`)}}
+ else{if(!it.shown){q=`${u.mem}<div class="big mono">${it.digits.join(" ")}</div>`;html=[];if(!it.mt){it.mt=1;const my=++wmTok;setTimeout(()=>{it.shown=true;if(items[cur]===it&&my===wmTok&&$("test").classList.contains("active"))renderQ()},it.digits.length*650+700)}}
+  else{q=WMQ[lang][it.mode];html=it.o.map((oi,j)=>`<div class="choice"><input type="radio" name="a" id="c${j}" value="${j}" ${it.a===j?"checked":""}><label for="c${j}" class="mono">${it.v[oi].join(" – ")}</label></div>`)}}
+ $("question").innerHTML=q;ch.className="choices"+(vis?" vis":"");ch.innerHTML=Array.isArray(html)?html.join(""):html}
+$("choices").addEventListener("click",e=>{const lab=e.target.closest(".choice");if(!lab)return;e.preventDefault();const inp=lab.querySelector("input"),it=items[cur];it.a=+inp.value;document.querySelectorAll("#choices input").forEach(x=>x.checked=(x===inp));
+ if(!window.advLock){window.advLock=true;setTimeout(()=>{window.advLock=false;advance()},100)}});
+/* ---------- speed round ---------- */
+const PSYM=["★","☆","●","○","■","□","▲","△","◆","◇","♠","♣"];
+function startPS(){const u=UI[lang];ps={c:0,w:0,end:Date.now()+45000,run:true};show("psS");$("psq").textContent=u.psq;$("psY").textContent=u.yes;$("psN").textContent=u.no;psNext();clearInterval(ps.iv);ps.iv=setInterval(psTick,100);psTick()}
+function psNext(){const P=shuffle(PSYM.slice()),tg=P.slice(0,2),yes=Math.random()<.5,row=P.slice(2,7);if(yes)row[Math.floor(Math.random()*5)]=tg[Math.floor(Math.random()*2)];ps.yes=yes;$("pstg").textContent=tg.join(" ");$("psrow").textContent=row.join(" ");$("psc").textContent=UI[lang].find}
+function psTick(){const left=Math.max(0,ps.end-Date.now());$("psbar").style.width=(left/45000*100)+"%";$("psl").textContent=`${UI[lang].left} ${Math.ceil(left/1000)}s`;if(left<=0&&ps.run){ps.run=false;clearInterval(ps.iv);finish()}}
+function psAns(b){if(!ps.run)return;const ok=b===ps.yes;if(ok)ps.c++;else ps.w++;const c=$("psCard");c.classList.remove("flash-ok","flash-no");c.classList.add(ok?"flash-ok":"flash-no");setTimeout(()=>c.classList.remove("flash-ok","flash-no"),120);psNext()}
+/* ---------- scoring ---------- */
+const LV=s=>s>=75?4:s>=55?3:s>=35?2:1;
+function typeOf(n){const mx=Math.max(...n),mn=Math.min(...n);return(mx-mn<30||mx<35)?5:n.indexOf(mx)}
+const order=n=>[0,1,2,3,4].sort((a,b)=>n[b]-n[a]||a-b);
+function finish(){clearInterval(ti);const s=[0,0,0,0],tw=[0,0,0,0];items.forEach(it=>{tw[it.sec]+=it.w;if(it.a!=null&&it.o[it.a]===0)s[it.sec]+=it.w});
+ const n=s.map((v,i)=>Math.round(Math.max(0,(v/tw[i]-.25)/.75)*100));n.push(Math.round(Math.min(1,Math.max(0,ps.c-ps.w)/26)*100));renderResult(n);show("result")}
+/* ---------- radar ---------- */
+const ANG=i=>(-90+i*72)*Math.PI/180,PT=(cx,cy,r,i)=>[cx+r*Math.cos(ANG(i)),cy+r*Math.sin(ANG(i))],RS=s=>.1+.9*s/100;
+function kite(cx,cy,R,i){const a=PT(cx,cy,R,i),p=PT(cx,cy,R,(i+4)%5),q=PT(cx,cy,R,(i+1)%5),m1=[(a[0]+p[0])/2,(a[1]+p[1])/2],m2=[(a[0]+q[0])/2,(a[1]+q[1])/2];return[[cx,cy],m1,a,m2]}
+function radarSvg(n,t){const cx=170,cy=165,R=104;let o="";const top=t<5?t:order(n)[0];
+ for(let i=0;i<5;i++){const k=kite(cx,cy,R,i);o+=`<polygon points="${k.map(p=>p.join(",")).join(" ")}" fill="${IDXC[i]}" fill-opacity="${t<5&&i===t?.28:.1}" stroke="#0a0f1d" stroke-width="1.5"/>`}
+ [.25,.5,.75,1].forEach(f=>{o+=`<polygon points="${[0,1,2,3,4].map(i=>PT(cx,cy,R*f,i).join(",")).join(" ")}" fill="none" stroke="#56627f" stroke-opacity="${f===1?.9:.45}" stroke-dasharray="${f===1?"":"3 3"}"/>`});
+ const P=n.map((s,i)=>PT(cx,cy,R*RS(s),i));o+=`<polygon points="${P.map(p=>p.join(",")).join(" ")}" fill="#2dd4bf" fill-opacity=".22" stroke="#e9fff9" stroke-width="2.4" stroke-linejoin="round"/>`;
+ P.forEach((p,i)=>{o+=`<circle cx="${p[0]}" cy="${p[1]}" r="${i===top?7:4.5}" fill="${IDXC[i]}" stroke="#0a0f1d" stroke-width="2"/>`});
+ for(let i=0;i<5;i++){const l=PT(cx,cy,R+30,i),dx=l[0]-cx,an=Math.abs(dx)<8?"middle":dx>0?"start":"end",lv=LV(n[i]),b=i===top;o+=`<text x="${l[0]+(an==="start"?-6:an==="end"?6:0)}" y="${l[1]-(i===0?6:0)}" text-anchor="${an}" font-size="${b?14:12.5}" font-weight="${b?900:700}" fill="${b?IDXC[i]:"#c9d3e6"}">${IN[lang][i]}</text><text x="${l[0]+(an==="start"?-6:an==="end"?6:0)}" y="${l[1]+(i===0?8:14)}" text-anchor="${an}" font-size="10.5" fill="${IDXC[i]}">${"●".repeat(lv)}${"○".repeat(4-lv)}</text>`}
+ return `<svg viewBox="0 0 340 330" style="width:min(100%,420px)">${o}</svg>`}
+function badge(t,e){const c=TYC[t];return `<svg viewBox="0 0 200 200" style="width:min(48%,180px)"><defs><radialGradient id="g"><stop offset="0" stop-color="${c}" stop-opacity=".55"/><stop offset="1" stop-color="${c}" stop-opacity=".06"/></radialGradient></defs><circle cx="100" cy="100" r="92" fill="url(#g)" stroke="${c}" stroke-opacity=".6" stroke-width="2"/><text x="100" y="130" text-anchor="middle" font-size="92">${e}</text></svg>`}
+function renderResult(n){last=n;const u=UI[lang],t=typeOf(n),ty=TY[lang][t],c=TYC[t],e=ty[2].split(" ")[0],o=order(n);
+ $("typeName").textContent=ty[0];$("typeName").style.color=c;$("nick").textContent=ty[1];$("chr").textContent=`${u.cha} · ${ty[2]}`;$("art1").innerHTML=badge(t,e);
+ $("radar").innerHTML=radarSvg(n,t);
+ $("chips").innerHTML=[0,1].map(k=>{const i=o[k];return `<span class="lg" style="border-color:${IDXC[i]};color:${IDXC[i]}">${k?u.sup:"★"} · ${IN[lang][i]}</span>`}).join("");
+ $("bars").innerHTML=o.map(i=>{const lv=LV(n[i]),top=i===o[0];return `<div class="br"><div class="bl"><span style="color:${IDXC[i]};font-weight:${top?900:700};font-size:${top?18:14}px">${IDXI[i]} ${IN[lang][i]}</span><span style="color:${IDXC[i]};font-weight:800;font-size:12px">${u.lvw[lv]}</span></div><div class="seg">${[1,2,3,4].map(k=>`<i style="${k<=lv?"background:"+IDXC[i]:""}"></i>`).join("")}</div></div>`}).join("");
+ $("typeDesc").innerHTML=`<div class="rd" style="border-color:#7fdca0"><h3 style="color:#7fdca0">${u.pro}</h3><p>${ty[3]}</p></div><div class="rd" style="border-color:#f0b46c"><h3 style="color:#f0b46c">${u.con}</h3><p>${ty[4]}</p></div>`;
+ $("insights").innerHTML=o.map(i=>{const hi=n[i]>=55;return `<div class="rd" style="border-color:${IDXC[i]}"><h3 style="color:${IDXC[i]}">${IDXI[i]} ${IN[lang][i]} · ${u.lvw[LV(n[i])]}</h3><p>${INS[lang][i][hi?0:1]}</p></div>`}).join("")}
+function setLang(l){lang=l;document.documentElement.lang=l;persistLang();const u=UI[l];document.querySelectorAll("[data-k]").forEach(e=>e.innerHTML=u[e.dataset.k]);
+ $("axgrid").innerHTML=[0,1,2,3,4].map(i=>`<div class="axis" style="border-color:${IDXC[i]}"><i>${IDXI[i]}</i><b>${IN[l][i]}</b><span>${ISUB[l][i]}</span></div>`).join("");
+ if($("test").classList.contains("active")&&items.length)renderQ();if($("sec").classList.contains("active"))showSec(window.curSec);
+ if($("psS").classList.contains("active")){$("psq").textContent=u.psq;$("psY").textContent=u.yes;$("psN").textContent=u.no}
+ if($("result").classList.contains("active")&&last)renderResult(last)}
+/* ---------- share ---------- */
+function shareText(){const ty=TY[lang][typeOf(last)];return `MIND 5\n${ty[0]} · ${ty[1]}\n${ty[2]}`}
+function shareUrl(){return(location.origin+location.pathname.replace(/[^\/]*$/,"")+"t/"+typeOf(last)+"/")+"#r="+last.join(".")+"&l="+lang}
+function copyLink(){const x=shareText()+"\n"+shareUrl();(navigator.clipboard?navigator.clipboard.writeText(x):Promise.reject()).then(()=>toast(UI[lang].copied)).catch(()=>toast(shareUrl()))}
+function copyResult(){copyLink()}
+function nativeShare(){const txt=shareText(),url=shareUrl();if(navigator.share)navigator.share({title:"MIND 5",text:txt,url}).catch(()=>{});else copyLink()}
+function kakaoShare(){if(!KAKAO_KEY)return nativeShare();const txt=shareText(),url=shareUrl(),go=()=>{try{if(!Kakao.isInitialized())Kakao.init(KAKAO_KEY);Kakao.Share.sendDefault({objectType:"text",text:txt,link:{mobileWebUrl:url,webUrl:url}})}catch(e){nativeShare()}};
+ if(window.Kakao)go();else{const sc=document.createElement("script");sc.src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js";sc.onload=go;sc.onerror=nativeShare;document.head.appendChild(sc)}}
+function share(p){const url=shareUrl(),txt=shareText(),e=encodeURIComponent;if(p==="line")return window.open(`https://social-plugins.line.me/lineit/share?url=${e(url)}&text=${e(txt)}`,"_blank");if(p==="wa")return window.open(`https://wa.me/?text=${e(txt+"\n"+url)}`,"_blank");if(p==="kakao")return kakaoShare();nativeShare()}
+function goHub(){HUB_URL?location.href=HUB_URL:toast(UI[lang].hubwait)}
+function leaveShared(){try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}restart()}
+function restart(){clearInterval(ti);clearInterval(ps.iv);ps.run=false;items=[];last=null;$("sbanner").style.display="none";document.querySelectorAll(".own").forEach(x=>x.style.display="");show("intro");$("timer").textContent="00:00"}
+function wrapT(c,t,x,y,w,lh){let l="";for(const ch of t){if(c.measureText(l+ch).width>w){c.fillText(l,x,y);l=ch;y+=lh}else l+=ch}c.fillText(l,x,y)}
+function cardImg(){const n=last,t=typeOf(n),ty=TY[lang][t],W=1080,cv=document.createElement("canvas");cv.width=W;cv.height=1350;const c=cv.getContext("2d");
+ c.fillStyle="#0a0f1d";c.fillRect(0,0,W,1350);c.textAlign="left";c.fillStyle="#93a0b8";c.font="700 26px sans-serif";c.fillText("MIND 5",72,90);
+ c.textAlign="center";c.fillStyle=TYC[t];c.font="800 76px serif";c.fillText(ty[0],W/2,190);c.fillStyle="#eef2fb";c.font="700 40px sans-serif";c.fillText(ty[1],W/2,252);c.fillStyle="#b8c3d8";c.font="500 30px sans-serif";c.fillText(ty[2],W/2,304);
+ const cx=W/2,cy=640,R=240,top=t<5?t:order(n)[0],P=(i,r)=>[cx+r*Math.cos(ANG(i)),cy+r*Math.sin(ANG(i))];
+ for(let i=0;i<5;i++){const k=kite(cx,cy,R,i);c.beginPath();k.forEach((p,j)=>j?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.closePath();c.globalAlpha=(t<5&&i===t)?.3:.12;c.fillStyle=IDXC[i];c.fill();c.globalAlpha=1;c.strokeStyle="#0a0f1d";c.lineWidth=3;c.stroke()}
+ [.25,.5,.75,1].forEach(f=>{c.beginPath();for(let i=0;i<5;i++){const p=P(i,R*f);i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1])}c.closePath();c.strokeStyle=f===1?"#7482a3":"#3d4968";c.lineWidth=2;c.stroke()});
+ c.beginPath();n.forEach((s,i)=>{const p=P(i,R*RS(s));i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1])});c.closePath();c.fillStyle="rgba(45,212,191,.25)";c.fill();c.strokeStyle="#e9fff9";c.lineWidth=5;c.lineJoin="round";c.stroke();
+ n.forEach((s,i)=>{const p=P(i,R*RS(s));c.beginPath();c.arc(p[0],p[1],i===top?15:10,0,7);c.fillStyle=IDXC[i];c.fill();c.strokeStyle="#0a0f1d";c.lineWidth=4;c.stroke()});
+ for(let i=0;i<5;i++){const p=P(i,R+62),dx=p[0]-cx;c.textAlign=Math.abs(dx)<10?"center":dx>0?"left":"right";const lx=p[0]+(Math.abs(dx)<10?0:dx>0?-18:18);c.fillStyle=i===top?IDXC[i]:"#c9d3e6";c.font=`${i===top?900:700} ${i===top?36:32}px sans-serif`;c.fillText(IN[lang][i],lx,p[1]+(i===0?-6:0));const lv=LV(n[i]);c.fillStyle=IDXC[i];c.font="26px sans-serif";c.fillText("●".repeat(lv)+"○".repeat(4-lv),lx,p[1]+(i===0?28:34))}
+ c.textAlign="left";c.fillStyle="#7fdca0";c.font="800 30px sans-serif";c.fillText(UI[lang].pro,90,1010);c.fillStyle="#b8c3d8";c.font="400 27px sans-serif";wrapT(c,ty[3],90,1054,900,38);
+ c.fillStyle="#f0b46c";c.font="800 30px sans-serif";c.fillText(UI[lang].con,90,1190);c.fillStyle="#b8c3d8";c.font="400 27px sans-serif";wrapT(c,ty[4],90,1232,900,38);
+ c.textAlign="center";c.fillStyle="#56627f";c.font="500 22px sans-serif";c.fillText("MIND 5 · not an official IQ test",W/2,1322);return cv}
+function cardOverlay(){const cv=cardImg(),url=cv.toDataURL("image/png"),o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:99;background:#000d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px";
+ o.innerHTML=`<img src="${url}" style="max-width:100%;max-height:76vh;border-radius:14px"><div style="color:#c4cad4;font-size:13px">${UI[lang].save}</div><div style="display:flex;gap:10px"><button class="btn primary" id="cs">${UI[lang].shr}</button><button class="btn ghost" id="cx">✕</button></div>`;document.body.appendChild(o);o.querySelector("#cx").onclick=()=>o.remove();
+ o.querySelector("#cs").onclick=()=>cv.toBlob(b=>{const f=new File([b],"mind5.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],text:shareText()}).catch(()=>{});else{const a=document.createElement("a");a.href=url;a.download="mind5.png";a.click()}})}
+window.addEventListener("load",()=>{let l="ko";try{l=localStorage.getItem("site_lang")||"ko"}catch(e){}
+ const h=new URLSearchParams(location.hash.slice(1)),r=(h.get("r")||"").split(".").map(Number),sh=r.length===5&&r.every(x=>Number.isFinite(x)&&x>=0&&x<=100);
+ if(sh&&UI[h.get("l")])l=h.get("l");if(!UI[l])l="ko";$("lang").value=l;setLang(l);
+ if(sh){last=r.map(Math.round);renderResult(last);$("sbanner").style.display="block";document.querySelectorAll(".own").forEach(x=>x.style.display="none");show("result")}});
+</script></body></html>
